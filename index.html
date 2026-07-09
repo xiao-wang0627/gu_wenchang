@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>谷文昌纪念馆 · 红色文化数字化展厅</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ==================== 基础重置 ==================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red-deep:#5c0a0a;
+  --red-primary:#b91c1c;
+  --red-bright:#dc2626;
+  --red-light:#ef4444;
+  --gold:#d4af37;
+  --gold-light:#e8c860;
+  --gold-bright:#f0d878;
+  --cream:#f5ecd9;
+  --paper:#faf3e6;
+  --ink:#1a1a1a;
+  --ink-soft:#2d2d2d;
+  --shadow:0 15px 45px rgba(0,0,0,.08);
+  --shadow-red:0 15px 45px rgba(185,28,28,.18);
+  --serif:'Noto Serif SC',serif;
+  --sans:'Noto Sans SC',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--paper);
+  overflow-x:hidden;
+  line-height:1.8;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+section{position:relative}
+
+/* ==================== 加载页 ==================== */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:radial-gradient(ellipse at center,#5c0a0a 0%,#2d0505 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 1s ease,visibility 1s ease;
+}
+#loader.done{opacity:0;visibility:hidden}
+.loader-star{
+  width:70px;height:70px;
+  background:var(--gold);
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  animation:starPulse 2s ease-in-out infinite;
+  filter:drop-shadow(0 0 20px rgba(212,175,55,.6));
+}
+@keyframes starPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.85}}
+.loader-text{
+  color:var(--gold);font-family:var(--serif);font-size:1.6rem;font-weight:900;
+  margin-top:1.5rem;letter-spacing:.3em;
+  animation:textFade 2s ease-in-out infinite;
+}
+.loader-sub{
+  color:rgba(212,175,55,.6);font-size:.85rem;letter-spacing:.4em;margin-top:.5rem;
+}
+@keyframes textFade{0%,100%{opacity:.6}50%{opacity:1}}
+.loader-bar{
+  width:200px;height:2px;background:rgba(212,175,55,.2);margin-top:2rem;overflow:hidden;border-radius:2px;
+}
+.loader-bar::after{
+  content:'';display:block;width:40%;height:100%;background:var(--gold);
+  animation:barMove 1.5s ease-in-out infinite;
+}
+@keyframes barMove{0%{margin-left:-40%}100%{margin-left:100%}}
+
+/* ==================== 导航栏 ==================== */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(92,10,10,0);
+  border-bottom:1px solid rgba(212,175,55,0);
+  transition:all .4s ease;
+}
+#navbar.scrolled{
+  background:rgba(92,10,10,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(212,175,55,.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.nav-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.nav-bgm-ctrl {
+  display: flex;
+  align-items: center;
+}
+.nav-bgm-btn {
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 0.4rem 0.95rem;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+  font-size: 0.8rem;
+  font-weight: 700;
+  outline: none;
+}
+.nav-bgm-btn:hover {
+  background: rgba(212, 175, 55, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+}
+#navbar.scrolled .nav-bgm-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(212, 175, 55, 0.5);
+}
+.nav-inner{
+  max-width:1400px;margin:0 auto;padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;height:64px;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:.75rem;
+  color:var(--gold);font-family:var(--serif);font-weight:700;font-size:1.15rem;
+}
+.nav-brand .star{
+  width:22px;height:22px;background:var(--gold);
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+.nav-links{display:flex;gap:0.5rem;list-style:none}
+.nav-links a{
+  color:rgba(245,236,217,.85);font-size:.9rem;padding:.5rem 1rem;
+  border-radius:6px;transition:all .3s;letter-spacing:.05em;
+  font-weight:500;
+}
+.nav-links a:hover{color:var(--gold);background:rgba(212,175,55,.1)}
+.nav-progress{
+  position:absolute;bottom:0;left:0;height:2px;background:var(--gold);
+  width:0%;transition:width .1s linear;
+}
+
+/* ==================== BGM 音乐播放器 ==================== */
+.music-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+.music-wave span {
+  display: inline-block;
+  width: 2px;
+  background: var(--gold);
+  height: 3px;
+  border-radius: 1px;
+}
+.bgm-container.playing .music-wave span {
+  animation: bgmWavePulse 1s ease-in-out infinite alternate;
+}
+.bgm-container.playing .music-wave span:nth-child(1) { animation-delay: 0.1s; }
+.bgm-container.playing .music-wave span:nth-child(2) { animation-delay: 0.4s; }
+.bgm-container.playing .music-wave span:nth-child(3) { animation-delay: 0.2s; }
+.bgm-container.playing .music-wave span:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes bgmWavePulse {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* ==================== 英雄区 ==================== */
+#hero{
+  height:100vh;min-height:700px;
+  background:
+    linear-gradient(135deg,rgba(92,10,10,.94) 0%,rgba(122,12,12,.87) 40%,rgba(45,5,5,.94) 100%),
+    url('images/portrait.jpg') center/cover no-repeat;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;position:relative;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(212,175,55,.18) 0%,transparent 50%),
+    radial-gradient(circle at 80% 70%,rgba(220,38,38,.22) 0%,transparent 50%);
+}
+#particleCanvas{position:absolute;inset:0;z-index:1}
+.hero-content{position:relative;z-index:2;max-width:800px;padding:0 2rem}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(212,175,55,.18);border:1px solid rgba(212,175,55,.45);
+  color:var(--gold-light);font-size:.8rem;letter-spacing:.3em;
+  padding:.4rem 1.2rem;border-radius:50px;margin-bottom:2rem;
+  backdrop-filter:blur(4px);
+}
+.hero-title{
+  font-family:var(--serif);font-size:clamp(3rem,8vw,6.5rem);font-weight:900;
+  color:var(--gold);line-height:1.15;letter-spacing:.05em;
+  text-shadow:0 6px 35px rgba(212,175,55,.35);
+  margin-bottom:1rem;
+}
+.hero-subtitle{
+  font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.6rem);
+  color:rgba(245,236,217,.92);letter-spacing:.35em;margin-bottom:2.5rem;
+}
+.hero-quote{
+  font-family:var(--serif);font-size:clamp(1.15rem,2.5vw,1.5rem);
+  color:var(--cream);font-style:italic;max-width:600px;margin:0 auto 3rem;
+  line-height:2.1;opacity:.92;
+}
+.hero-quote::before,.hero-quote::after{content:'"';color:var(--gold);font-size:1.5em}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--red-deep);font-weight:700;font-size:1rem;
+  padding:.9rem 2.6rem;border-radius:50px;cursor:pointer;
+  border:none;transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing:.1em;
+  box-shadow:0 8px 30px rgba(212,175,55,.35);
+}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(212,175,55,.55)}
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  color:rgba(245,236,217,.5);font-size:.75rem;letter-spacing:.2em;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2;
+}
+.hero-scroll .line{
+  width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--gold));
+  animation:scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ==================== 通用区块 ==================== */
+.section-pad{padding:6.5rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{
+  display:flex;align-items:center;gap:1rem;margin-bottom:1rem;
+}
+.section-label .bar{width:40px;height:3px;background:var(--red-primary)}
+.section-label .text{
+  color:var(--red-primary);font-size:.8rem;letter-spacing:.3em;font-weight:600;
+}
+.section-title{
+  font-family:var(--serif);font-size:clamp(2.1rem,4vw,3.2rem);font-weight:900;
+  color:var(--ink);margin-bottom:1rem;line-height:1.3;
+}
+.section-title .accent{color:var(--red-primary)}
+.section-desc{
+  color:#666;font-size:1.05rem;max-width:680px;margin-bottom:3.5rem;
+}
+
+/* ==================== 生平时间线 ==================== */
+#timeline{background:linear-gradient(180deg,var(--paper) 0%,#f0e6d0 100%)}
+.timeline-wrap{position:relative;padding:2rem 0}
+.timeline-line{
+  position:absolute;left:50%;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,transparent,var(--red-primary) 10%,var(--red-primary) 90%,transparent);
+  transform:translateX(-50%);
+}
+.timeline-item{
+  display:grid;grid-template-columns:1fr 80px 1fr;gap:2rem;
+  margin-bottom:3.5rem;align-items:start;
+  opacity:0.3;
+  transform:translateY(30px);
+  transition:all .8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.timeline-item.in {
+  opacity:0.5;
+  transform:translateY(0);
+}
+.timeline-item.active {
+  opacity:1;
+}
+.timeline-dot{
+  grid-column: 2;
+  grid-row: 1;
+  width:18px;height:18px;border-radius:50%;background:var(--gold);
+  border:4px solid var(--red-primary);margin:2.2rem auto 0;
+  box-shadow:0 0 0 4px rgba(185,28,28,.15);
+  position:relative;z-index:2;
+  transition:all 0.4s ease;
+}
+.timeline-content {
+  grid-row: 1;
+}
+.timeline-empty {
+  grid-row: 1;
+}
+.timeline-dot::after{
+  content:'';position:absolute;inset:-12px;border-radius:50%;
+  border:1px dashed rgba(185,28,28,.35);
+  animation:dotRotate 20s linear infinite;
+}
+.timeline-item.active .timeline-dot {
+  background:var(--gold-bright);
+  box-shadow:0 0 15px var(--gold-bright);
+  transform:scale(1.3);
+}
+@keyframes dotRotate{to{transform:rotate(360deg)}}
+.timeline-card{
+  background:#fff;border-radius:18px;padding:1.6rem 2.2rem;
+  box-shadow:var(--shadow);border-left:4px solid var(--red-primary);
+  transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1),box-shadow .4s ease,border-color 0.4s ease;
+}
+.timeline-card:hover, .timeline-item.active .timeline-card{
+  transform:translateY(-6px);box-shadow:var(--shadow-red);
+}
+.timeline-item.active .timeline-card {
+  border-left-color:var(--red-bright);
+}
+.timeline-year{
+  font-family:var(--serif);font-size:1.9rem;font-weight:900;color:var(--red-primary);
+  margin-bottom:.5rem;
+}
+.timeline-card h3{font-size:1.15rem;margin-bottom:.5rem;color:var(--ink);font-weight:700}
+.timeline-card p{font-size:.92rem;color:#666;line-height:1.75}
+.timeline-item:nth-child(even) .timeline-content{grid-column:3}
+.timeline-item:nth-child(odd) .timeline-content{grid-column:1;text-align:right}
+.timeline-item:nth-child(odd) .timeline-card{border-left:none;border-right:4px solid var(--red-primary);transition:all 0.4s;}
+.timeline-item:nth-child(odd).active .timeline-card {border-right-color:var(--red-bright);}
+.timeline-empty{visibility:hidden}
+
+/* ==================== 事迹展区 ==================== */
+#deeds{background:#fff}
+.deeds-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;
+}
+.deed-card{
+  position:relative;border-radius:24px;overflow:hidden;
+  min-height:380px;display:flex;align-items:flex-end;
+  cursor:pointer;transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+  box-shadow:var(--shadow);
+}
+.deed-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-red)}
+.deed-card::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.35) 50%,transparent 100%);
+}
+.deed-card .deed-bg{
+  position:absolute;inset:0;z-index:0;transition:transform .8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.deed-card:hover .deed-bg{transform:scale(1.08)}
+.deed-content{position:relative;z-index:2;padding:2.5rem;color:#fff}
+.deed-icon{
+  width:50px;height:50px;border-radius:12px;
+  background:rgba(212,175,55,.2);border:1px solid rgba(212,175,55,.45);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:1.25rem;
+}
+.deed-content h3{
+  font-family:var(--serif);font-size:1.55rem;font-weight:700;margin-bottom:.75rem;
+}
+.deed-content p{font-size:.92rem;opacity:.9;line-height:1.75;margin-bottom:1.25rem}
+.deed-tag{
+  display:inline-block;background:rgba(212,175,55,.22);
+  border:1px solid rgba(212,175,55,.45);color:var(--gold-light);
+  font-size:.75rem;padding:.25rem .9rem;border-radius:50px;letter-spacing:.05em;
+  font-weight:600;
+}
+.deed-1 .deed-bg{background:url('images/green.jpg') center/cover no-repeat}
+.deed-2 .deed-bg{background:url('images/portrait.jpg') center/cover no-repeat}
+.deed-3 .deed-bg{background:url('images/work.jpg') center/cover no-repeat}
+.deed-4 .deed-bg{background:url('images/tree.jpg') center/cover no-repeat}
+
+/* ==================== 东山巨变滑块 ==================== */
+#transformation{
+  background:linear-gradient(180deg,#fff 0%,var(--paper) 100%);
+}
+.transform-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  position: relative;
+}
+.before-after-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 953 / 615;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 4px solid var(--gold);
+  user-select: none;
+  touch-action: pan-y;
+}
+.slider-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.slider-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.img-before {
+  z-index: 1;
+}
+.img-after {
+  z-index: 2;
+  clip-path: inset(0 0 0 var(--clip-pos, 50%));
+}
+.slider-label {
+  position: absolute;
+  top: 1rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: var(--gold-light);
+  font-size: 0.85rem;
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(4px);
+  z-index: 3;
+}
+.label-before {
+  left: 1rem;
+}
+.label-after {
+  right: 1rem;
+}
+.slider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--clip-pos, 50%);
+  width: 4px;
+  background: var(--gold);
+  z-index: 4;
+  cursor: ew-resize;
+  transform: translateX(-50%);
+}
+.slider-handle-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: var(--red-primary);
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.35);
+  font-size: 1.25rem;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
+.slider-handle:hover .slider-handle-button {
+  background: var(--red-bright);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.transform-caption{
+  margin-top: 1.5rem;text-align:center;
+}
+.transform-caption h4{
+  font-size:1.05rem;color:var(--ink);margin-bottom:.4rem;
+  font-weight:700;
+}
+.transform-caption p{
+  font-size:.85rem;color:#777;
+}
+
+/* ==================== 精神丰碑 ==================== */
+#spirit{
+  background:linear-gradient(180deg,#7a0c0c 0%,#450505 100%);
+  color:#fff;
+}
+#spirit .section-title{color:var(--gold)}
+#spirit .section-label .text{color:var(--gold-light)}
+#spirit .section-label .bar{background:var(--gold)}
+#spirit .section-desc{color:rgba(245,236,217,.72)}
+.spirit-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:1rem;
+}
+.spirit-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.18);
+  border-radius:22px;padding:2.5rem 1.6rem;text-align:center;
+  transition:all .4s cubic-bezier(0.16, 1, 0.3, 1);backdrop-filter:blur(10px);
+}
+.spirit-card:hover{
+  background:rgba(212,175,55,.12);border-color:var(--gold);
+  transform:translateY(-10px);box-shadow:0 20px 50px rgba(212,175,55,.25);
+}
+.spirit-num{
+  font-family:var(--serif);font-size:3rem;font-weight:900;
+  color:var(--gold);opacity:.35;line-height:1;margin-bottom:1rem;
+}
+.spirit-card h3{
+  font-family:var(--serif);font-size:1.35rem;color:var(--gold-light);
+  margin-bottom:1rem;letter-spacing:.1em;
+}
+.spirit-card p{font-size:.88rem;color:rgba(245,236,217,.85);line-height:1.8}
+.spirit-divider{
+  width:1px;height:40px;background:rgba(212,175,55,.3);margin:1.5rem auto;
+}
+
+/* ==================== 数字文物 ==================== */
+#artifacts{background:linear-gradient(180deg,#f0e6d0 0%,var(--paper) 100%)}
+.artifact-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;
+}
+.artifact-item{
+  background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:var(--shadow);transition:all .4s cubic-bezier(0.16, 1, 0.3, 1);cursor:pointer;
+  border:1px solid rgba(0,0,0,.04);
+}
+.artifact-item:hover{transform:translateY(-6px);box-shadow:var(--shadow-red)}
+.artifact-img{
+  height:240px;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.artifact-img img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0;transition:transform 0.5s;}
+.artifact-item:hover .artifact-img img {transform:scale(1.05)}
+.artifact-1 .artifact-img,.artifact-2 .artifact-img,.artifact-3 .artifact-img,.artifact-4 .artifact-img,.artifact-5 .artifact-img,.artifact-6 .artifact-img,.artifact-7 .artifact-img,.artifact-8 .artifact-img{background:#e8e4db}
+.artifact-info{padding:1.35rem 1.6rem}
+.artifact-info .tag{
+  font-size:.7rem;color:var(--red-primary);letter-spacing:.1em;
+  font-weight:600;margin-bottom:.4rem;
+}
+.artifact-info h4{font-size:1.05rem;margin-bottom:.4rem;color:var(--ink);font-weight:700}
+.artifact-info p{font-size:.82rem;color:#777;line-height:1.65}
+
+/* ==================== 文物弹窗 ==================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 3, 3, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  padding: 1.5rem;
+}
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-card {
+  background: #fff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 900px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-overlay.active .modal-card {
+  transform: scale(1) translateY(0);
+}
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  background: rgba(0,0,0,0.1);
+  border: none;
+  font-size: 2rem;
+  color: var(--ink);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 10;
+}
+.modal-close-btn:hover {
+  background: var(--red-primary);
+  color: #fff;
+}
+.modal-content-wrap {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-height: 480px;
+}
+.modal-image-panel {
+  background: #e8e4db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+.modal-image-panel img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.modal-info-panel {
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.modal-tag {
+  align-self: flex-start;
+  font-size: 0.8rem;
+  color: var(--red-primary);
+  border: 1px solid var(--red-primary);
+  padding: 0.2rem 0.8rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.modal-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+.speech-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--paper);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--gold);
+}
+.speech-btn {
+  background: var(--red-primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  outline: none;
+}
+.speech-btn:hover {
+  background: var(--red-bright);
+}
+.voice-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.voice-wave.active {
+  opacity: 1;
+}
+.voice-wave span {
+  display: inline-block;
+  width: 3px;
+  background: var(--gold);
+  height: 4px;
+  border-radius: 3px;
+}
+.voice-wave.active span {
+  animation: wavePulse 1.2s ease-in-out infinite alternate;
+}
+.voice-wave.active span:nth-child(1) { animation-delay: 0.1s; }
+.voice-wave.active span:nth-child(2) { animation-delay: 0.3s; }
+.voice-wave.active span:nth-child(3) { animation-delay: 0.6s; }
+.voice-wave.active span:nth-child(4) { animation-delay: 0.2s; }
+.voice-wave.active span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wavePulse {
+  0% { height: 4px; }
+  100% { height: 20px; }
+}
+.modal-description {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.8;
+  overflow-y: auto;
+  max-height: 240px;
+  padding-right: 0.5rem;
+}
+.modal-description::-webkit-scrollbar {
+  width: 4px;
+}
+.modal-description::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+/* ==================== 语录墙 ==================== */
+#quotes{
+  background:linear-gradient(135deg,#2d0505 0%,#5c0a0a 50%,#2d0505 100%);
+  color:#fff;overflow:hidden;
+}
+#quotes .section-title{color:var(--gold)}
+#quotes .section-label .text{color:var(--gold-light)}
+#quotes .section-label .bar{background:var(--gold)}
+#quotes .section-desc{color:rgba(245,236,217,.72)}
+.quote-wall{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem;
+}
+.quote-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.15);
+  border-radius:18px;padding:2.2rem;position:relative;
+  transition:all .4s ease;backdrop-filter:blur(8px);
+}
+.quote-card:hover{
+  background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.4);
+  transform:scale(1.03);
+}
+.quote-mark{
+  font-family:var(--serif);font-size:4rem;color:var(--gold);
+  opacity:.2;line-height:1;position:absolute;top:.5rem;left:1rem;
+}
+.quote-text{
+  font-family:var(--serif);font-size:1.08rem;line-height:2.0;
+  color:rgba(245,236,217,.95);position:relative;z-index:1;margin-bottom:1.25rem;
+}
+.quote-source{
+  font-size:.82rem;color:var(--gold-light);letter-spacing:.1em;
+}
+
+/* ==================== 薪火相传 ==================== */
+#legacy{
+  background:linear-gradient(180deg,var(--paper) 0%,#f0e6d0 100%);
+  text-align:center;
+}
+.legacy-hero{
+  max-width:700px;margin:0 auto 3rem;
+}
+.legacy-hero h2{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:900;
+  color:var(--red-primary);margin-bottom:1rem;
+}
+.legacy-hero p{font-size:1.1rem;color:#555;line-height:2}
+.legacy-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+  max-width:900px;margin:0 auto 3rem;
+}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,3.8rem);font-weight:900;
+  color:var(--red-primary);line-height:1;
+}
+.stat-unit{font-size:1rem;color:var(--red-primary);font-weight:700}
+.stat-label{font-size:.85rem;color:#888;margin-top:.5rem;letter-spacing:.1em}
+.legacy-tribute{
+  max-width:600px;margin:3rem auto 0;
+  background:#fff;border-radius:20px;padding:2.5rem;
+  box-shadow:var(--shadow);border-top:4px solid var(--gold);
+}
+.tribute-stars{
+  display:flex;justify-content:center;gap:.5rem;margin-bottom:1rem;
+}
+.tribute-star{
+  width:16px;height:16px;background:var(--gold);
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+.tribute-text{
+  font-family:var(--serif);font-size:1.1rem;color:var(--ink);
+  line-height:2;font-style:italic;
+}
+.tribute-author{
+  margin-top:1rem;font-size:.85rem;color:var(--red-primary);
+  letter-spacing:.1em;font-weight:600;
+}
+
+/* ==================== 线上致敬与留言 ==================== */
+.tribute-interactive {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(92, 10, 10, 0.12);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  max-width: 800px;
+  margin: 3.5rem auto 4rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 5;
+  box-shadow: var(--shadow);
+}
+.tribute-btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.tribute-btn {
+  border: none;
+  background: #fff;
+  border-radius: 50px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+.tribute-btn-flower {
+  color: #c94b7c;
+  border: 2px solid #f6d1df;
+}
+.tribute-btn-flower:hover {
+  background: #fff0f5;
+  border-color: #c94b7c;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(201, 75, 124, 0.18);
+}
+.tribute-btn-salute {
+  color: var(--red-primary);
+  border: 2px solid rgba(185, 28, 28, 0.2);
+}
+.tribute-btn-salute:hover {
+  background: #fff5f5;
+  border-color: var(--red-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(185, 28, 28, 0.18);
+}
+.tribute-btn:active {
+  transform: translateY(-1px);
+}
+.btn-icon {
+  font-size: 1.3rem;
+  transition: transform 0.3s;
+}
+.tribute-btn:hover .btn-icon {
+  transform: scale(1.2) rotate(15deg);
+}
+.tribute-counter {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-top: 1rem;
+}
+.counter-num {
+  font-weight: 700;
+  color: var(--red-primary);
+  font-size: 1.15rem;
+}
+.tribute-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3000;
+  width: 100%;
+  height: 100%;
+}
+
+.guestbook-section {
+  max-width: 900px;
+  margin: 4.5rem auto 0;
+  text-align: left;
+}
+.guestbook-title {
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  color: var(--red-primary);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 900;
+}
+.guestbook-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+}
+.guestbook-form {
+  background: #fff;
+  border-radius: 24px;
+  padding: 2.2rem;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--red-primary);
+  margin-bottom: 3.5rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.guestbook-form input,
+.guestbook-form textarea {
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: all 0.3s;
+}
+.guestbook-form input:focus,
+.guestbook-form textarea:focus {
+  outline: none;
+  border-color: var(--red-primary);
+  background: #fff;
+  box-shadow: 0 0 8px rgba(185, 28, 28, 0.15);
+}
+.guestbook-form textarea {
+  height: 110px;
+  resize: none;
+  margin-bottom: 1.5rem;
+}
+.guestbook-submit-btn {
+  background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
+  color: #fff;
+  border: none;
+  padding: 0.85rem 2.6rem;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 5px 18px rgba(185, 28, 28, 0.2);
+}
+.guestbook-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(185, 28, 28, 0.4);
+}
+.guestbook-wall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.guestbook-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+  border-left: 3px solid var(--gold);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: cardFadeIn 0.5s ease-out both;
+}
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.guestbook-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-red);
+}
+.guestbook-card p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+.guestbook-card .card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 0.75rem;
+}
+.guestbook-card .meta-name {
+  font-weight: 700;
+  color: var(--red-primary);
+  font-size: 0.82rem;
+}
+.guestbook-card .meta-info {
+  color: #999;
+  font-size: 0.75rem;
+}
+
+/* ==================== 页脚 ==================== */
+footer{
+  background:#1a0303;color:rgba(245,236,217,.6);
+  padding:3.5rem 2rem 2.5rem;text-align:center;
+}
+.footer-brand{
+  font-family:var(--serif);font-size:1.25rem;color:var(--gold);
+  margin-bottom:.6rem;letter-spacing:.1em;font-weight:700;
+}
+.footer-text{font-size:.82rem;line-height:1.8;margin-bottom:1rem}
+.footer-copy{font-size:.75rem;color:rgba(245,236,217,.4);border-top:1px solid rgba(212,175,55,.1);padding-top:1.2rem;margin-top:1.2rem}
+
+/* ==================== 传统印章饰件 ==================== */
+.seal-stamp {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #b91c1c;
+  padding: 3px;
+  width: 42px;
+  height: 42px;
+  color: #b91c1c;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  line-height: 1.1;
+  font-weight: 900;
+  background: rgba(185, 28, 28, 0.03);
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgba(185, 28, 28, 0.1);
+  transform: rotate(-3deg);
+  user-select: none;
+  vertical-align: middle;
+  margin-left: 1rem;
+}
+.seal-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.china-stamp {
+  display: inline-block;
+  border: 1.5px solid #b91c1c;
+  color: #b91c1c;
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 1px 4px;
+  line-height: 1.2;
+  transform: rotate(-2deg);
+  border-radius: 2px;
+  margin-left: 0.6rem;
+  letter-spacing: 1px;
+  background: rgba(185, 28, 28, 0.02);
+  vertical-align: middle;
+}
+
+/* ==================== 动画类 ==================== */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* ==================== 响应式 ==================== */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .deeds-grid{grid-template-columns:1fr}
+  .spirit-grid{grid-template-columns:repeat(2,1fr)}
+  .artifact-grid{grid-template-columns:repeat(2,1fr)}
+  .quote-wall{grid-template-columns:1fr}
+  .legacy-stats{grid-template-columns:repeat(2,1fr)}
+  .timeline-line{left:20px}
+  .timeline-item{grid-template-columns:40px 1fr;gap:1rem}
+  .timeline-dot{grid-column: 1; margin:2.2rem 0 0 0}
+  .timeline-item:nth-child(odd) .timeline-content,
+  .timeline-item:nth-child(even) .timeline-content{grid-column:2;text-align:left}
+  .timeline-item:nth-child(odd) .timeline-card{border-right:none;border-left:4px solid var(--red-primary)}
+  .timeline-empty{display:none}
+  .modal-content-wrap {grid-template-columns: 1fr;}
+  .modal-image-panel {padding: 1.5rem;}
+  .modal-image-panel img {max-height: 250px;}
+  .modal-info-panel {padding: 1.5rem;}
+  .guestbook-wall {grid-template-columns: repeat(2, 1fr);}
+}
+@media(max-width:600px){
+  .section-pad{padding:4.5rem 1.25rem}
+  .spirit-grid{grid-template-columns:1fr}
+  .artifact-grid{grid-template-columns:1fr}
+  .legacy-stats{grid-template-columns:1fr}
+  .tribute-btn-group {flex-direction: column;gap: 1rem;align-items: center;}
+  .form-row {grid-template-columns: 1fr;}
+  .guestbook-wall {grid-template-columns: 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 加载页 ===== -->
+<div id="loader">
+  <div class="loader-star"></div>
+  <div class="loader-text">谷文昌纪念馆</div>
+  <div class="loader-sub">RED CULTURE DIGITAL HALL</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ===== 导航栏 ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="star"></span>
+      <span>谷文昌纪念馆</span>
+    </div>
+    
+    <div class="nav-right-controls">
+      <ul class="nav-links">
+        <li><a href="#timeline">生平历程</a></li>
+        <li><a href="#deeds">丰功伟绩</a></li>
+        <li><a href="#transformation">东山巨变</a></li>
+        <li><a href="#spirit">精神丰碑</a></li>
+        <li><a href="#artifacts">数字文物</a></li>
+        <li><a href="#quotes">谆谆教诲</a></li>
+        <li><a href="#legacy">薪火相传</a></li>
+      </ul>
+      
+      <!-- BGM Player in Navbar -->
+      <div id="bgmContainer" class="nav-bgm-ctrl">
+        <button id="bgmToggleBtn" class="nav-bgm-btn" aria-label="播放背景音乐">
+          <div class="music-wave" id="bgmWave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="bgm-text">音乐</span>
+        </button>
+        <audio id="bgmAudio" loop src="https://ccma.oss-cn-hangzhou.aliyuncs.com/bgm.mp3"></audio>
+      </div>
+    </div>
+  </div>
+  <div class="nav-progress" id="navProgress"></div>
+</nav>
+
+<!-- ===== 英雄区 ===== -->
+<section id="hero">
+  <canvas id="particleCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>★</span> 红色文化数字化展厅
+    </div>
+    <h1 class="hero-title">谷文昌</h1>
+    <p class="hero-subtitle">人 民 的 好 书 记</p>
+    <p class="hero-quote">不治服风沙，就让风沙把我埋掉</p>
+    <button class="hero-cta" onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">
+      走 进 展 厅 →
+    </button>
+  </div>
+  <div class="hero-scroll">
+    <span>向下滚动</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- ===== 生平时间线 ===== -->
+<section id="timeline" class="section-pad">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">LIFE CHRONOLOGY</span>
+    </div>
+    <h2 class="section-title reveal" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+      生 <span class="accent">平</span> 历 程
+      <div class="seal-stamp">
+        <div class="seal-row"><span>纪</span><span>谷</span></div>
+        <div class="seal-row"><span>念</span><span>公</span></div>
+      </div>
+    </h2>
+    <p class="section-desc reveal">谷文昌（1915—1981），河南林州人，1943年加入中国共产党。1950年随军南下福建东山，历任东山县县长、县委书记，在东山岛奋斗十四年，将荒漠孤岛变成绿洲绿岛。</p>
+
+    <div class="timeline-wrap">
+      <div class="timeline-line"></div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1915</div>
+            <h3>出生于河南林县</h3>
+            <p>10月15日生于河南省林县（今林州市）郭家庄的一户贫农家庭，自幼放牛砍柴，饱尝旧社会苦难。</p>
+          </div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-empty"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1943</div>
+            <h3>投身革命 加入共产党</h3>
+            <p>参加抗日民兵，同年加入中国共产党。历任村农会主席、区委书记，在枪林弹雨中淬炼革命信念。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1950</div>
+            <h3>随军南下 解放东山</h3>
+            <p>随长江支队南下福建，5月12日东山岛解放。谷文昌留任东山，开启了他与这座海岛十四年的不解之缘。</p>
+          </div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-empty"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1955</div>
+            <h3>就任东山县委书记</h3>
+            <p>出任东山县委书记，面对风沙肆虐、民生凋敝的困境，立下"不治服风沙，就让风沙把我埋掉"的铮铮誓言。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1958</div>
+            <h3>木麻黄治沙 取得突破</h3>
+            <p>历经多次试种失败，终于找到适合东山海岛的木麻黄树种。带领全县人民掀起植树造林热潮，筑起"绿色长城"。</p>
+          </div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-empty"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1964</div>
+            <h3>调离东山 调任省林业厅</h3>
+            <p>调任福建省林业厅副厅长。离开东山时，全岛已造林8.2万亩，昔日的荒沙岛变成了绿洲。百姓夹道相送，泪洒长街。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">1981</div>
+            <h3>与世长辞 魂归东山</h3>
+            <p>1月30日在福州病逝。遵其遗愿，骨灰安葬于东山赤山林场——他亲手栽下的木麻黄林中。东山百姓形成"先祭谷公，后祭祖宗"的习俗。</p>
+          </div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-empty"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year">2015</div>
+            <h3>习近平赞"四有"干部楷模</h3>
+            <p>习近平总书记在中央党校县委书记研修班上，高度赞扬谷文昌为"心中有党、心中有民、心中有责、心中有戒"的"四有"干部楷模。</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 丰功伟绩 ===== -->
+<section id="deeds" class="section-pad">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">GREAT ACHIEVEMENTS</span>
+    </div>
+    <h2 class="section-title reveal">丰 <span class="accent">功</span> 伟 绩</h2>
+    <p class="section-desc reveal">谷文昌在东山十四年，以"功成不必在我"的胸怀和"功成必定有我"的担当，为东山人民留下了取之不尽的宝贵财富。</p>
+
+    <div class="deeds-grid">
+      <div class="deed-card deed-1 reveal">
+        <div class="deed-bg"></div>
+        <div class="deed-content">
+          <div class="deed-icon">🌲</div>
+          <h3>治沙造林 筑绿色长城</h3>
+          <p>历时十四年，带领东山军民植树造林8.2万亩，营造30多公里长的"绿色长城"，彻底根治千年风沙之患，让荒岛变绿洲。</p>
+          <span class="deed-tag">造林8.2万亩</span>
+        </div>
+      </div>
+
+      <div class="deed-card deed-2 reveal reveal-delay-1">
+        <div class="deed-bg"></div>
+        <div class="deed-content">
+          <div class="deed-icon">🤝</div>
+          <h3>改"敌伪家属"为"兵灾家属"</h3>
+          <p>解放初，东山有4700余户"敌伪家属"遭受歧视。谷文昌力排众议，将她们改为"兵灾家属"，给予政治上的平等对待，赢得了全岛民心。</p>
+          <span class="deed-tag">惠及4700余户</span>
+        </div>
+      </div>
+
+      <div class="deed-card deed-3 reveal reveal-delay-2">
+        <div class="deed-bg"></div>
+        <div class="deed-content">
+          <div class="deed-icon">💧</div>
+          <h3>兴修水利 造福海岛</h3>
+          <p>带领群众修筑水库、开挖渠道，建成红旗水库等水利工程，解决东山岛世代缺水之苦，使农田旱涝保收，百姓饮水无忧。</p>
+          <span class="deed-tag">修建水库13座</span>
+        </div>
+      </div>
+
+      <div class="deed-card deed-4 reveal reveal-delay-3">
+        <div class="deed-bg"></div>
+        <div class="deed-content">
+          <div class="deed-icon">⚖️</div>
+          <h3>廉洁奉公 一心为民</h3>
+          <p>身居县委书记高位，却从不谋私利。子女无一安排工作，家属长期是农村户口。"当领导的要先把自己的手洗净，把自己的腰杆挺直。"</p>
+          <span class="deed-tag">两袖清风</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 东山巨变 ===== -->
+<section id="transformation" class="section-pad">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">BEFORE & AFTER</span>
+    </div>
+    <h2 class="section-title reveal">东 <span class="accent">山</span> 巨 变</h2>
+    <p class="section-desc reveal">从风沙肆虐的荒岛，到郁郁葱葱的东海绿洲——这是谷文昌带领东山人民用十四年心血铸就的绿色奇迹。</p>
+
+    <!-- 交互式对比滑块 -->
+    <div class="transform-wrapper reveal">
+      <div class="before-after-slider" id="dongshanSlider" style="--clip-pos: 50%;">
+        <div class="slider-img img-before">
+          <img src="images/dongshan-rock-aligned-before.jpg" alt="昔日东山">
+          <span class="slider-label label-before">昔 · 风沙肆虐</span>
+        </div>
+        <div class="slider-img img-after">
+          <img src="images/dongshan-rock-aligned-after.jpg" alt="今日东山">
+          <span class="slider-label label-after">今 · 东海绿洲</span>
+        </div>
+        <div class="slider-handle">
+          <div class="slider-handle-button">↔</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="transform-caption reveal">
+      <h4>同一地点，左右滑动对比查看半个世纪的沧桑巨变</h4>
+      <p>拼版对比：东山岛东门屿鹰嘴岩附近风貌，按住滑块左右拖拽（资料照片）</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 精神丰碑 ===== -->
+<section id="spirit" class="section-pad">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">SPIRIT MONUMENT</span>
+    </div>
+    <h2 class="section-title reveal">精 <span class="accent" style="color:var(--gold)">神</span> 丰 碑</h2>
+    <p class="section-desc reveal">习近平总书记将谷文昌精神凝练为"四有"——心中有党、心中有民、心中有责、心中有戒。这是共产党人的精神坐标，也是新时代的价值航标。</p>
+
+    <div class="spirit-grid">
+      <div class="spirit-card reveal">
+        <div class="spirit-num">壹</div>
+        <h3>心中有党</h3>
+        <div class="spirit-divider"></div>
+        <p>信念坚定，对党忠诚。无论身处顺境逆境，始终坚守共产党人的理想信念，听党话、跟党走，把党的事业放在心中最高位置。</p>
+      </div>
+
+      <div class="spirit-card reveal reveal-delay-1">
+        <div class="spirit-num">贰</div>
+        <h3>心中有民</h3>
+        <div class="spirit-divider"></div>
+        <p>一心为民，心系百姓。视人民为父母，把群众利益放在首位。"不把人民救出苦难，共产党来干什么"是他的赤诚心声。</p>
+      </div>
+
+      <div class="spirit-card reveal reveal-delay-2">
+        <div class="spirit-num">叁</div>
+        <h3>心中有责</h3>
+        <div class="spirit-divider"></div>
+        <p>敢于担当，迎难而上。面对风沙之患，他立下铮铮誓言；面对复杂历史遗留问题，他力排众议，以"功成不必在我"的胸怀干事创业。</p>
+      </div>
+
+      <div class="spirit-card reveal reveal-delay-3">
+        <div class="spirit-num">肆</div>
+        <h3>心中有戒</h3>
+        <div class="spirit-divider"></div>
+        <p>廉洁奉公，严于律己。不谋私利，不搞特殊，清白做人，干净做事。"把自己的手洗净，把腰杆挺直"，是他对干部的基本要求。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 数字文物 ===== -->
+<section id="artifacts" class="section-pad">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">DIGITAL ARTIFACTS</span>
+    </div>
+    <h2 class="section-title reveal">数 <span class="accent">字</span> 文 物</h2>
+    <p class="section-desc reveal">以下照片均取自福建东山县谷文昌纪念馆实景，包括序厅塑像、旧居复原、勤政历程展厅等珍贵画面，让您身临其境地走进这座红色教育基地。</p>
+
+    <div class="artifact-grid">
+      <div class="artifact-item artifact-1 reveal">
+        <div class="artifact-img"><img src="images/dongshan-before.jpg" alt="昔日东山岛" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">历史档案</div>
+          <h4>昔日东山岛旧貌</h4>
+          <p>风沙肆虐时期的东山岛，沙埋村舍、满目疮痍。一年六级以上大风长达150多天。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-2 reveal reveal-delay-1">
+        <div class="artifact-img"><img src="images/hall-exhibit3.jpg" alt="谷文昌纪念馆序厅" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">纪念馆实景</div>
+          <h4>谷文昌纪念馆序厅</h4>
+          <p>纪念馆序厅中央矗立着谷文昌铜像，背景是鲜红的党旗，上方悬挂着象征和平的和平鸽。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-3 reveal reveal-delay-2">
+        <div class="artifact-img"><img src="images/planting.jpg" alt="植树造林现场" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">历史影像</div>
+          <h4>东山百姓沙滩造林</h4>
+          <p>上世纪东山岛百姓在沙滩上种植木麻黄的历史照片，再现了当年军民齐心治沙的壮阔场景。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-4 reveal reveal-delay-1">
+        <div class="artifact-img"><img src="images/tree.jpg" alt="谷文昌与木麻黄" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">珍贵留影</div>
+          <h4>谷文昌与木麻黄</h4>
+          <p>谷文昌视察试种成活的木麻黄，这抹绿色承载着东山人战胜风沙的全部希望。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-5 reveal reveal-delay-2">
+        <div class="artifact-img"><img src="images/hall-exhibit5.jpg" alt="谷文昌旧居复原展" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">纪念馆实景</div>
+          <h4>谷文昌旧居复原展</h4>
+          <p>纪念馆内复原了谷文昌当年在东山居住的老宅场景，石墙、木门、石磨，再现了那个艰苦朴素的年代。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-6 reveal reveal-delay-3">
+        <div class="artifact-img"><img src="images/dongshan-rock-aligned-after.jpg" alt="东山岛新貌" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">沧桑巨变</div>
+          <h4>今日东山岛新貌</h4>
+          <p>同一地点今昔对比，昔日的荒沙岛已变成郁郁葱葱的东海绿洲，见证"绿水青山就是金山银山"。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-7 reveal reveal-delay-1">
+        <div class="artifact-img"><img src="images/hall-exhibit6.jpg" alt="勤政历程展厅" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">纪念馆实景</div>
+          <h4>勤政历程展厅</h4>
+          <p>纪念馆展厅以图文并茂的形式，展示了谷文昌在东山十四年如一日的勤政为民历程。</p>
+        </div>
+      </div>
+
+      <div class="artifact-item artifact-8 reveal reveal-delay-2">
+        <div class="artifact-img"><img src="images/hall-exhibit8.jpg" alt="为民担当展厅" loading="lazy"></div>
+        <div class="artifact-info">
+          <div class="tag">纪念馆实景</div>
+          <h4>为民担当展厅</h4>
+          <p>展厅内生动再现了谷文昌深入群众、访贫问苦的感人场景，"不带私心搞革命，一心一意为人民"。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Artifact Detail Modal ===== -->
+<div id="artifactModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close-btn" aria-label="关闭弹窗">&times;</button>
+    <div class="modal-content-wrap">
+      <div class="modal-image-panel">
+        <img id="modalImg" src="" alt="文物图片">
+      </div>
+      <div class="modal-info-panel">
+        <span id="modalTag" class="modal-tag">历史档案</span>
+        <h3 id="modalTitle" class="modal-title">文物名称</h3>
+        <div class="speech-controls">
+          <button id="speechPlayBtn" class="speech-btn">
+            <span class="play-icon">🔊</span> <span class="btn-text">听取导览</span>
+          </button>
+          <div class="voice-wave" id="voiceWave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <p id="modalDesc" class="modal-description">文物详细描述...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 语录墙 ===== -->
+<section id="quotes" class="section-pad">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">WORDS OF WISDOM</span>
+    </div>
+    <h2 class="section-title reveal">谆 <span class="accent" style="color:var(--gold)">谆</span> 教 诲</h2>
+    <p class="section-desc reveal">谷文昌的只言片语，朴实无华却掷地有声。这些话语穿越时空，至今仍在叩问每一位共产党人的初心。</p>
+
+    <div class="quote-wall">
+      <div class="quote-card reveal">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">不治服风沙，就让风沙把我埋掉。</p>
+        <p class="quote-source">—— 谷文昌 · 治沙誓言</p>
+      </div>
+
+      <div class="quote-card reveal reveal-delay-1">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">不把人民救出苦难，共产党来干什么！</p>
+        <p class="quote-source">—— 谷文昌 · 为民初心</p>
+      </div>
+
+      <div class="quote-card reveal reveal-delay-2">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">当领导的要先把自己的手洗净，把自己的腰杆挺直。</p>
+        <p class="quote-source">—— 谷文昌 · 廉洁自律</p>
+      </div>
+
+      <div class="quote-card reveal">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">造福人民就是最大的政绩。</p>
+        <p class="quote-source">—— 谷文昌 · 政绩观</p>
+      </div>
+
+      <div class="quote-card reveal reveal-delay-1">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">共产党人要干一行爱一行，干一行专一行，干一行成一行。</p>
+        <p class="quote-source">—— 谷文昌 · 干事创业</p>
+      </div>
+
+      <div class="quote-card reveal reveal-delay-2">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">我们要对人民负责，对历史负责，对未来负责。</p>
+        <p class="quote-source">—— 谷文昌 · 责任担当</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 薪火相传 ===== -->
+<section id="legacy" class="section-pad">
+  <div class="section-inner">
+    <div class="legacy-hero reveal">
+      <h2>薪 火 相 传</h2>
+      <p>谷文昌虽然离开了我们，但他的精神永存。东山百姓"先祭谷公，后祭祖宗"的习俗延续至今，成为共产党人精神丰碑的生动注脚。</p>
+    </div>
+
+    <div class="legacy-stats">
+      <div class="stat-item reveal">
+        <div class="stat-num">8.2<span class="stat-unit">万亩</span></div>
+        <div class="stat-label">治 沙 造 林</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num">14<span class="stat-unit">年</span></div>
+        <div class="stat-label">扎 根 东 山</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num">4700<span class="stat-unit">户</span></div>
+        <div class="stat-label">惠 及 百 姓</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num">40<span class="stat-unit">余年</span></div>
+        <div class="stat-label">精 神 传 承</div>
+      </div>
+    </div>
+
+    <!-- 线上互动致敬区 -->
+    <div class="tribute-interactive reveal">
+      <div class="tribute-btn-group">
+        <button id="btnFlower" class="tribute-btn tribute-btn-flower">
+          <span class="btn-icon">🌸</span>
+          <span class="btn-lbl">线上献花</span>
+        </button>
+        <button id="btnSalute" class="tribute-btn tribute-btn-salute">
+          <span class="btn-icon">⭐</span>
+          <span class="btn-lbl">肃立敬礼</span>
+        </button>
+      </div>
+      <p class="tribute-counter">已累计致敬：献花 <span id="flowerCount" class="counter-num">12,458</span> 朵，敬礼 <span id="saluteCount" class="counter-num">8,962</span> 次</p>
+    </div>
+    
+    <!-- Tribute particles canvas -->
+    <canvas id="tributeCanvas" class="tribute-canvas"></canvas>
+
+    <div class="legacy-tribute reveal">
+      <div class="tribute-stars">
+        <span class="tribute-star"></span>
+        <span class="tribute-star"></span>
+        <span class="tribute-star"></span>
+        <span class="tribute-star"></span>
+        <span class="tribute-star"></span>
+      </div>
+      <p class="tribute-text">"谷文昌同志的事迹同焦裕禄、杨善洲的事迹一样，展示了中国共产党人的为民情怀、高尚品格、革命精神。"</p>
+      <p class="tribute-author">—— 习近平<span class="china-stamp">为民楷模</span></p>
+    </div>
+
+    <!-- 寄语墙 -->
+    <div class="guestbook-section reveal">
+      <h3 class="guestbook-title">缅怀寄语</h3>
+      <p class="guestbook-subtitle">留下您的瞻仰心声，将革命精神代代相传</p>
+      
+      <form id="guestbookForm" class="guestbook-form">
+        <div class="form-row">
+          <input type="text" id="guestName" placeholder="您的姓名/昵称" required maxlength="15">
+          <input type="text" id="guestLoc" placeholder="您的省份/地区（选填）" maxlength="15">
+        </div>
+        <textarea id="guestContent" placeholder="写下您的瞻仰感言..." required maxlength="200"></textarea>
+        <button type="submit" class="guestbook-submit-btn">提交寄语</button>
+      </form>
+
+      <div class="guestbook-wall" id="guestbookWall">
+        <!-- Message cards loaded dynamically -->
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 展厅背景音乐已整合至导航栏 ===== -->
+
+<!-- ===== 页脚 ===== -->
+<footer>
+  <div class="footer-brand">★ 谷文昌纪念馆 · 红色文化数字化展厅</div>
+  <p class="footer-text">心中有党 · 心中有民 · 心中有责 · 心中有戒</p>
+  <p class="footer-text">本展厅为数字化展示用途，致敬人民的好书记——谷文昌同志</p>
+  <p class="footer-copy">© 2026 谷文昌纪念馆数字展厅 · Red Culture Digital Exhibition Hall</p>
+</footer>
+
+<script>
+// ===== 加载页 =====
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('done'),1500);
+});
+
+// ===== 导航栏显隐 + 进度条 =====
+const navbar=document.getElementById('navbar');
+const navProgress=document.getElementById('navProgress');
+const hero=document.getElementById('hero');
+
+window.addEventListener('scroll',()=>{
+  const sc=window.scrollY;
+  const heroH=hero.offsetHeight;
+  if(sc > 50) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  const pct=(sc/docH)*100;
+  navProgress.style.width=pct+'%';
+});
+
+// ===== 时间线滚动高亮 =====
+const timelineItems = document.querySelectorAll('.timeline-item');
+window.addEventListener('scroll', () => {
+  const triggerBottom = window.innerHeight * 0.75;
+  timelineItems.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < triggerBottom) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+});
+
+// ===== 滚动揭示动画 =====
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('in');
+  });
+},{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ===== 英雄区粒子效果 =====
+const canvas=document.getElementById('particleCanvas');
+const ctx=canvas.getContext('2d');
+let particles=[];
+let W,H;
+
+function resize(){
+  W=canvas.width=canvas.offsetWidth;
+  H=canvas.height=canvas.offsetHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+class Particle{
+  constructor(){
+    this.x=Math.random()*W;
+    this.y=Math.random()*H;
+    this.r=Math.random()*2.8+0.8;
+    this.vx=(Math.random()-0.65)*0.5; // gentle side wind
+    this.vy=Math.random()*0.6+0.35;    // fall downwards
+    this.alpha=Math.random()*0.5+0.35;
+    
+    // Mix gold foil dust and traditional red falling leaves
+    const rand = Math.random();
+    if (rand < 0.45) {
+      this.color = '212,175,55'; // Imperial Gold
+      this.type = 'gold';
+    } else {
+      this.color = '185,28,28';  // Classic Chinese Red
+      this.type = 'leaf';
+    }
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotSpeed = (Math.random() - 0.5) * 0.03;
+  }
+  update(){
+    this.x+=this.vx;
+    this.y+=this.vy;
+    this.rotation+=this.rotSpeed;
+    if(this.y>H+10){
+      this.y=-10;
+      this.x=Math.random()*W;
+    }
+    if(this.x<-10)this.x=W+10;
+    if(this.x>W+10)this.x=-10;
+  }
+  draw(){
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle=`rgba(${this.color},${this.alpha})`;
+    
+    if (this.type === 'leaf') {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, this.r * 2.5, this.r * 1.2, 0, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.arc(0, 0, this.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+}
+
+for(let i=0;i<80;i++) particles.push(new Particle());
+
+function animate(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{p.update();p.draw()});
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ===== 导航锚点平滑滚动 =====
+document.querySelectorAll('.nav-links a').forEach(link=>{
+  link.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(link.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// ===== 东山巨变交互滑块 =====
+const slider = document.getElementById('dongshanSlider');
+const handle = slider.querySelector('.slider-handle');
+let isSliding = false;
+
+function slide(clientX) {
+  const rect = slider.getBoundingClientRect();
+  let position = ((clientX - rect.left) / rect.width) * 100;
+  if (position < 0) position = 0;
+  if (position > 100) position = 100;
+  slider.style.setProperty('--clip-pos', `${position}%`);
+}
+
+handle.addEventListener('mousedown', () => isSliding = true);
+window.addEventListener('mouseup', () => isSliding = false);
+window.addEventListener('mousemove', (e) => {
+  if (!isSliding) return;
+  slide(e.clientX);
+});
+
+handle.addEventListener('touchstart', () => isSliding = true);
+window.addEventListener('touchend', () => isSliding = false);
+window.addEventListener('touchmove', (e) => {
+  if (!isSliding) return;
+  slide(e.touches[0].clientX);
+});
+
+slider.addEventListener('click', (e) => {
+  if (e.target.closest('.slider-handle-button')) return;
+  slide(e.clientX);
+});
+
+// ===== 数字文物弹窗与语音导览 =====
+const modal = document.getElementById('artifactModal');
+const modalImg = document.getElementById('modalImg');
+const modalTag = document.getElementById('modalTag');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const closeBtn = modal.querySelector('.modal-close-btn');
+const speechPlayBtn = document.getElementById('speechPlayBtn');
+const voiceWave = document.getElementById('voiceWave');
+
+let synth = window.speechSynthesis;
+let utterance = null;
+let isSpeaking = false;
+
+// Force voice loading in Chrome / modern browsers
+if (synth) {
+  synth.getVoices();
+}
+
+document.querySelectorAll('.artifact-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('.artifact-img img').src;
+    const title = item.querySelector('h4').innerText;
+    const tag = item.querySelector('.tag').innerText;
+    const desc = item.querySelector('p').innerText;
+    
+    modalImg.src = img;
+    modalTitle.innerText = title;
+    modalTag.innerText = tag;
+    modalDesc.innerText = desc;
+    
+    stopSpeaking();
+    
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  });
+});
+
+closeBtn.addEventListener('click', () => {
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  stopSpeaking();
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    stopSpeaking();
+  }
+});
+
+speechPlayBtn.addEventListener('click', () => {
+  if (isSpeaking) {
+    stopSpeaking();
+  } else {
+    startSpeaking();
+  }
+});
+
+function startSpeaking() {
+  if (!synth) {
+    alert("您的浏览器不支持语音播报功能。");
+    return;
+  }
+  synth.cancel();
+  
+  const text = `${modalTitle.innerText}。${modalDesc.innerText}`;
+  utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'zh-CN';
+  
+  const voices = synth.getVoices();
+  const zhVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('ZH'));
+  if (zhVoice) utterance.voice = zhVoice;
+  
+  utterance.onend = () => {
+    stopSpeaking();
+  };
+  utterance.onerror = () => {
+    stopSpeaking();
+  };
+  
+  isSpeaking = true;
+  speechPlayBtn.querySelector('.play-icon').innerText = '⏸';
+  speechPlayBtn.querySelector('.btn-text').innerText = '暂停导览';
+  voiceWave.classList.add('active');
+  
+  synth.speak(utterance);
+}
+
+function stopSpeaking() {
+  if (synth) {
+    synth.cancel();
+  }
+  isSpeaking = false;
+  if (speechPlayBtn) {
+    speechPlayBtn.querySelector('.play-icon').innerText = '🔊';
+    speechPlayBtn.querySelector('.btn-text').innerText = '听取导览';
+  }
+  if (voiceWave) {
+    voiceWave.classList.remove('active');
+  }
+}
+
+// ===== BGM 音乐播放控制 & Web Audio 降级合成器 =====
+const bgmContainer = document.getElementById('bgmContainer');
+const bgmAudio = document.getElementById('bgmAudio');
+const bgmToggleBtn = document.getElementById('bgmToggleBtn');
+
+let bgmPlaying = false;
+let isSynthBgm = false;
+let synthInterval = null;
+let audioCtx = null;
+
+bgmToggleBtn.addEventListener('click', () => {
+  if (bgmPlaying) {
+    if (isSynthBgm) {
+      stopBgmSynth();
+    } else {
+      bgmAudio.pause();
+    }
+    bgmPlaying = false;
+    bgmContainer.classList.remove('playing');
+  } else {
+    bgmAudio.play()
+      .then(() => {
+        bgmPlaying = true;
+        isSynthBgm = false;
+        bgmContainer.classList.add('playing');
+      })
+      .catch((err) => {
+        // Fallback to Web Audio synthesiser (completely offline/failsafe)
+        bgmPlaying = true;
+        isSynthBgm = true;
+        bgmContainer.classList.add('playing');
+        startBgmSynth();
+      });
+  }
+});
+
+function playAmbientSynth() {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    
+    const now = audioCtx.currentTime;
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    osc1.type = 'sine';
+    osc2.type = 'sine';
+    
+    // Traditional Chinese style pentatonic notes: C4 (261.63), D4 (293.66), E4 (329.63), G4 (392.00), A4 (440.00)
+    const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
+    const freq1 = notes[Math.floor(Math.random() * notes.length)];
+    const freq2 = notes[Math.floor(Math.random() * notes.length)] * 1.5; 
+    
+    osc1.frequency.setValueAtTime(freq1, now);
+    osc2.frequency.setValueAtTime(freq2, now);
+    
+    gainNode.gain.setValueAtTime(0, now);
+    gainNode.gain.linearRampToValueAtTime(0.04, now + 1.2);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 5.5);
+    
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 6);
+    osc2.stop(now + 6);
+  } catch (e) {
+    // audio ctx blocked or not supported
+  }
+}
+
+function startBgmSynth() {
+  playAmbientSynth();
+  synthInterval = setInterval(playAmbientSynth, 4500);
+}
+
+function stopBgmSynth() {
+  if (synthInterval) {
+    clearInterval(synthInterval);
+  }
+}
+
+// ===== 线上致敬粒子特效 (Confetti) =====
+const tributeCanvas = document.getElementById('tributeCanvas');
+const tCtx = tributeCanvas.getContext('2d');
+let tributeParticles = [];
+
+function resizeTributeCanvas() {
+  tributeCanvas.width = window.innerWidth;
+  tributeCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeTributeCanvas);
+resizeTributeCanvas();
+
+class TributeParticle {
+  constructor(x, y, type) {
+    this.x = x;
+    this.y = y;
+    this.type = type; // 'flower' or 'star'
+    this.size = Math.random() * 8 + 5;
+    this.angle = Math.random() * Math.PI * 2;
+    this.speed = Math.random() * 5 + 4;
+    this.vx = Math.cos(this.angle) * this.speed;
+    this.vy = Math.sin(this.angle) * this.speed - 3.5; // push up
+    this.gravity = 0.22;
+    this.alpha = 1;
+    this.decay = Math.random() * 0.018 + 0.01;
+    this.rotation = Math.random() * Math.PI;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.12;
+    
+    if (this.type === 'flower') {
+      const colors = ['#f687b3', '#f6a5c0', '#f6c7da', '#e9d8a6'];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+    } else {
+      const colors = ['#ecc94b', '#f6e05e', '#d69e2e', '#faf089'];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += this.gravity;
+    this.alpha -= this.decay;
+    this.rotation += this.rotationSpeed;
+  }
+  draw() {
+    tCtx.save();
+    tCtx.translate(this.x, this.y);
+    tCtx.rotate(this.rotation);
+    tCtx.globalAlpha = this.alpha;
+    tCtx.fillStyle = this.color;
+    
+    if (this.type === 'flower') {
+      tCtx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        tCtx.rotate(Math.PI * 2 / 5);
+        tCtx.ellipse(0, -this.size/2, this.size/3.2, this.size/1.8, 0, 0, Math.PI * 2);
+      }
+      tCtx.fill();
+    } else {
+      tCtx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        tCtx.lineTo(0, -this.size);
+        tCtx.rotate(Math.PI / 5);
+        tCtx.lineTo(0, -this.size / 2.2);
+        tCtx.rotate(Math.PI / 5);
+      }
+      tCtx.closePath();
+      tCtx.fill();
+    }
+    tCtx.restore();
+  }
+}
+
+function spawnTributeConfetti(e, type) {
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight * 0.8;
+  
+  if (e) {
+    x = e.clientX;
+    y = e.clientY;
+  }
+  
+  for (let i = 0; i < 35; i++) {
+    tributeParticles.push(new TributeParticle(x, y, type));
+  }
+}
+
+// Fixed variable scoping in requestAnimationFrame
+function animateTribute() {
+  tCtx.clearRect(0, 0, tributeCanvas.width, tributeCanvas.height);
+  tributeParticles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  tributeParticles = tributeParticles.filter(p => p.alpha > 0);
+  requestAnimationFrame(animateTribute);
+}
+
+// Counters & Sound triggers
+let flowers = parseInt(localStorage.getItem('tribute_flowers') || '12458');
+let salutes = parseInt(localStorage.getItem('tribute_salutes') || '8962');
+
+document.getElementById('flowerCount').innerText = flowers.toLocaleString();
+document.getElementById('saluteCount').innerText = salutes.toLocaleString();
+
+document.getElementById('btnFlower').addEventListener('click', (e) => {
+  flowers++;
+  localStorage.setItem('tribute_flowers', flowers);
+  document.getElementById('flowerCount').innerText = flowers.toLocaleString();
+  spawnTributeConfetti(e, 'flower');
+  playTributeSound(440.00); 
+});
+
+document.getElementById('btnSalute').addEventListener('click', (e) => {
+  salutes++;
+  localStorage.setItem('tribute_salutes', salutes);
+  document.getElementById('saluteCount').innerText = salutes.toLocaleString();
+  spawnTributeConfetti(e, 'star');
+  playTributeSound(554.37); 
+});
+
+function playTributeSound(freq) {
+  try {
+    const actx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = actx.createOscillator();
+    const gain = actx.createGain();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, actx.currentTime);
+    
+    gain.gain.setValueAtTime(0, actx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.08, actx.currentTime + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.6);
+    
+    osc.connect(gain);
+    gain.connect(actx.destination);
+    
+    osc.start();
+    osc.stop(actx.currentTime + 0.6);
+  } catch (err) {
+    // blocked or not supported
+  }
+}
+
+// ===== 留言墙 (Guestbook) =====
+const defaultComments = [
+  { name: "张华敏", loc: "福建厦门", content: "十四年治沙造林，功在当代，利在千秋。向谷书记致敬，我们要以他为楷模，心中有民，脚踏实地。" },
+  { name: "李建国", loc: "河南林州", content: "作为家乡人，看到东山岛如今的海岛绿洲，内心无比激动与自豪。谷公精神永放光芒！" },
+  { name: "红旗漫卷", loc: "北京", content: "心中的四有楷模，廉洁奉公，两袖清风。每次来东山岛，先祭谷公已成了发自肺腑的敬仰。" }
+];
+
+function loadComments() {
+  let stored = localStorage.getItem('guestbook_comments');
+  let comments = stored ? JSON.parse(stored) : defaultComments;
+  
+  const wall = document.getElementById('guestbookWall');
+  wall.innerHTML = '';
+  
+  comments.slice().reverse().forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'guestbook-card';
+    card.innerHTML = `
+      <p>"${c.content}"</p>
+      <div class="card-meta">
+        <span class="meta-name">${c.name}</span>
+        <span class="meta-info">${c.loc || '瞻仰者'}</span>
+      </div>
+    `;
+    wall.appendChild(card);
+  });
+}
+
+document.getElementById('guestbookForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('guestName').value.trim();
+  const loc = document.getElementById('guestLoc').value.trim();
+  const content = document.getElementById('guestContent').value.trim();
+  
+  let stored = localStorage.getItem('guestbook_comments');
+  let comments = stored ? JSON.parse(stored) : defaultComments;
+  
+  comments.push({ name, loc, content });
+  localStorage.setItem('guestbook_comments', JSON.stringify(comments));
+  
+  loadComments();
+  
+  document.getElementById('guestbookForm').reset();
+  spawnTributeConfetti(null, 'star');
+});
+
+loadComments();
+</script>
+
+</body>
+</html>
