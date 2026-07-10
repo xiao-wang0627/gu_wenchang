@@ -127,6 +127,11 @@ section{position:relative}
 .bgm-container.playing .bgm-icon {
   animation: bgmIconBounce 0.6s ease-in-out infinite alternate;
 }
+/* 播放时按钮发光，更直观地显示状态 */
+.bgm-container.playing .nav-bgm-btn {
+  background: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5), 0 0 24px rgba(212, 175, 55, 0.2);
+}
 @keyframes bgmIconBounce {
   0% { transform: scale(1) rotate(-5deg); }
   100% { transform: scale(1.15) rotate(5deg); }
@@ -1122,7 +1127,7 @@ footer{
         <button id="bgmToggleBtn" class="nav-bgm-btn" aria-label="播放背景音乐">
           <span class="bgm-icon">🎵</span>
         </button>
-        <audio id="bgmAudio" loop src="https://ccma.oss-cn-hangzhou.aliyuncs.com/bgm.mp3"></audio>
+        <audio id="bgmAudio" loop preload="auto" src="mengyuan.mp3"></audio>
       </div>
     </div>
   </div>
@@ -1908,94 +1913,47 @@ function stopSpeaking() {
   }
 }
 
-// ===== BGM 音乐播放控制 & Web Audio 降级合成器 =====
+// ===== BGM 音乐播放控制（按钮与《梦圆》MP3 直接绑定） =====
 const bgmContainer = document.getElementById('bgmContainer');
 const bgmAudio = document.getElementById('bgmAudio');
 const bgmToggleBtn = document.getElementById('bgmToggleBtn');
+const bgmIcon = bgmContainer.querySelector('.bgm-icon');
 
-let bgmPlaying = false;
-let isSynthBgm = false;
-let synthInterval = null;
-let audioCtx = null;
-
-bgmToggleBtn.addEventListener('click', () => {
-  if (bgmPlaying) {
-    if (isSynthBgm) {
-      stopBgmSynth();
-    } else {
-      bgmAudio.pause();
-    }
-    bgmPlaying = false;
-    bgmContainer.classList.remove('playing');
+/* —— 按钮状态视觉 —— */
+function setBgmState(playing) {
+  if (playing) {
+    bgmContainer.classList.add('playing');
+    bgmToggleBtn.setAttribute('aria-label', '暂停背景音乐');
+    bgmIcon.textContent = '🎵';
   } else {
-    bgmAudio.play()
-      .then(() => {
-        bgmPlaying = true;
-        isSynthBgm = false;
-        bgmContainer.classList.add('playing');
-      })
-      .catch((err) => {
-        // Fallback to Web Audio synthesiser (completely offline/failsafe)
-        bgmPlaying = true;
-        isSynthBgm = true;
-        bgmContainer.classList.add('playing');
-        startBgmSynth();
-      });
+    bgmContainer.classList.remove('playing');
+    bgmToggleBtn.setAttribute('aria-label', '播放背景音乐');
+    bgmIcon.textContent = '🎵';
   }
+}
+
+/* —— 音频事件监听：确保按钮状态与音频实际状态同步 —— */
+bgmAudio.addEventListener('play',  () => setBgmState(true));
+bgmAudio.addEventListener('pause', () => setBgmState(false));
+bgmAudio.addEventListener('ended', () => setBgmState(false));
+bgmAudio.addEventListener('error', () => {
+  setBgmState(false);
+  bgmIcon.textContent = '🔇';
+  bgmToggleBtn.title = '音乐加载失败，请刷新重试';
 });
 
-function playAmbientSynth() {
-  try {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    
-    const now = audioCtx.currentTime;
-    const osc1 = audioCtx.createOscillator();
-    const osc2 = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    
-    osc1.type = 'sine';
-    osc2.type = 'sine';
-    
-    // Traditional Chinese style pentatonic notes: C4 (261.63), D4 (293.66), E4 (329.63), G4 (392.00), A4 (440.00)
-    const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
-    const freq1 = notes[Math.floor(Math.random() * notes.length)];
-    const freq2 = notes[Math.floor(Math.random() * notes.length)] * 1.5; 
-    
-    osc1.frequency.setValueAtTime(freq1, now);
-    osc2.frequency.setValueAtTime(freq2, now);
-    
-    gainNode.gain.setValueAtTime(0, now);
-    gainNode.gain.linearRampToValueAtTime(0.04, now + 1.2);
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 5.5);
-    
-    osc1.connect(gainNode);
-    osc2.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    
-    osc1.start(now);
-    osc2.start(now);
-    osc1.stop(now + 6);
-    osc2.stop(now + 6);
-  } catch (e) {
-    // audio ctx blocked or not supported
+/* —— 按钮点击：直接控制 MP3 播放/暂停 —— */
+bgmToggleBtn.addEventListener('click', () => {
+  if (bgmAudio.paused) {
+    // 播放：浏览器自动播放策略要求在用户交互内调用 play()
+    bgmAudio.play().catch(err => {
+      console.warn('播放失败:', err.message);
+      setBgmState(false);
+    });
+  } else {
+    bgmAudio.pause();
   }
-}
-
-function startBgmSynth() {
-  playAmbientSynth();
-  synthInterval = setInterval(playAmbientSynth, 4500);
-}
-
-function stopBgmSynth() {
-  if (synthInterval) {
-    clearInterval(synthInterval);
-  }
-}
+});
 
 // ===== 线上致敬粒子特效 (Confetti) =====
 const tributeCanvas = document.getElementById('tributeCanvas');
