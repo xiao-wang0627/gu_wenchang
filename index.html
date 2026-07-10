@@ -98,16 +98,17 @@ section{position:relative}
   background: rgba(212, 175, 55, 0.18);
   border: 1px solid var(--gold);
   color: var(--gold);
-  padding: 0.4rem 0.95rem;
-  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
   transition: all 0.3s;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 1.2rem;
   outline: none;
+  padding: 0;
 }
 .nav-bgm-btn:hover {
   background: rgba(212, 175, 55, 0.35);
@@ -117,6 +118,18 @@ section{position:relative}
 #navbar.scrolled .nav-bgm-btn {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(212, 175, 55, 0.5);
+}
+.bgm-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 0.3s;
+}
+.bgm-container.playing .bgm-icon {
+  animation: bgmIconBounce 0.6s ease-in-out infinite alternate;
+}
+@keyframes bgmIconBounce {
+  0% { transform: scale(1) rotate(-5deg); }
+  100% { transform: scale(1.15) rotate(5deg); }
 }
 .nav-inner{
   max-width:1400px;margin:0 auto;padding:0 2rem;
@@ -298,7 +311,7 @@ section{position:relative}
 }
 @keyframes dotRotate{to{transform:rotate(360deg)}}
 .timeline-card{
-  background:#fff;border-radius:18px;padding:1.6rem 2.2rem;
+  background:linear-gradient(135deg,#fdfaf2 0%,#faf5e8 100%);border-radius:18px;padding:1.6rem 2.2rem;
   box-shadow:var(--shadow);border-left:4px solid var(--red-primary);
   transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1),box-shadow .4s ease,border-color 0.4s ease;
 }
@@ -982,8 +995,9 @@ section{position:relative}
 
 /* ==================== 页脚 ==================== */
 footer{
-  background:#1a0303;color:rgba(245,236,217,.6);
+  background:linear-gradient(135deg,#5c0a0a 0%,#450505 100%);color:rgba(245,236,217,.6);
   padding:3.5rem 2rem 2.5rem;text-align:center;
+  border-top:1px solid rgba(212,175,55,.25);
 }
 .footer-brand{
   font-family:var(--serif);font-size:1.25rem;color:var(--gold);
@@ -1109,13 +1123,7 @@ footer{
       <!-- BGM Player in Navbar -->
       <div id="bgmContainer" class="nav-bgm-ctrl">
         <button id="bgmToggleBtn" class="nav-bgm-btn" aria-label="播放背景音乐">
-          <div class="music-wave" id="bgmWave">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <span class="bgm-text">音乐</span>
+          <span class="bgm-icon">🎵</span>
         </button>
         <audio id="bgmAudio" loop src="https://ccma.oss-cn-hangzhou.aliyuncs.com/bgm.mp3"></audio>
       </div>
@@ -1277,7 +1285,6 @@ footer{
       <div class="deed-card deed-1 reveal">
         <div class="deed-bg"></div>
         <div class="deed-content">
-          <div class="deed-icon">🌲</div>
           <h3>治沙造林 筑绿色长城</h3>
           <p>历时十四年，带领东山军民植树造林8.2万亩，营造30多公里长的"绿色长城"，彻底根治千年风沙之患，让荒岛变绿洲。</p>
           <span class="deed-tag">造林8.2万亩</span>
@@ -1287,7 +1294,6 @@ footer{
       <div class="deed-card deed-2 reveal reveal-delay-1">
         <div class="deed-bg"></div>
         <div class="deed-content">
-          <div class="deed-icon">🤝</div>
           <h3>改"敌伪家属"为"兵灾家属"</h3>
           <p>解放初，东山有4700余户"敌伪家属"遭受歧视。谷文昌力排众议，将她们改为"兵灾家属"，给予政治上的平等对待，赢得了全岛民心。</p>
           <span class="deed-tag">惠及4700余户</span>
@@ -1297,7 +1303,6 @@ footer{
       <div class="deed-card deed-3 reveal reveal-delay-2">
         <div class="deed-bg"></div>
         <div class="deed-content">
-          <div class="deed-icon">💧</div>
           <h3>兴修水利 造福海岛</h3>
           <p>带领群众修筑水库、开挖渠道，建成红旗水库等水利工程，解决东山岛世代缺水之苦，使农田旱涝保收，百姓饮水无忧。</p>
           <span class="deed-tag">修建水库13座</span>
@@ -1307,7 +1312,6 @@ footer{
       <div class="deed-card deed-4 reveal reveal-delay-3">
         <div class="deed-bg"></div>
         <div class="deed-content">
-          <div class="deed-icon">⚖️</div>
           <h3>廉洁奉公 一心为民</h3>
           <p>身居县委书记高位，却从不谋私利。子女无一安排工作，家属长期是农村户口。"当领导的要先把自己的手洗净，把自己的腰杆挺直。"</p>
           <span class="deed-tag">两袖清风</span>
