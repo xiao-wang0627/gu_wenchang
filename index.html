@@ -132,6 +132,17 @@ section{position:relative}
   background: rgba(212, 175, 55, 0.35);
   box-shadow: 0 0 12px rgba(212, 175, 55, 0.5), 0 0 24px rgba(212, 175, 55, 0.2);
 }
+/* 缓冲加载状态：图标旋转 */
+.bgm-container.loading .bgm-icon {
+  animation: bgmIconSpin 1s linear infinite;
+}
+.bgm-container.loading .nav-bgm-btn {
+  background: rgba(212, 175, 55, 0.2);
+}
+@keyframes bgmIconSpin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @keyframes bgmIconBounce {
   0% { transform: scale(1) rotate(-5deg); }
   100% { transform: scale(1.15) rotate(5deg); }
@@ -1913,45 +1924,79 @@ function stopSpeaking() {
   }
 }
 
-// ===== BGM 音乐播放控制（按钮与《梦圆》MP3 直接绑定） =====
+// ===== BGM 音乐播放控制（按钮与《梦圆》MP3 直接绑定 + 缓冲优化） =====
 const bgmContainer = document.getElementById('bgmContainer');
 const bgmAudio = document.getElementById('bgmAudio');
 const bgmToggleBtn = document.getElementById('bgmToggleBtn');
 const bgmIcon = bgmContainer.querySelector('.bgm-icon');
 
+let bgmWantPlay = false;  // 用户想播放（但可能还在缓冲）
+
 /* —— 按钮状态视觉 —— */
-function setBgmState(playing) {
-  if (playing) {
-    bgmContainer.classList.add('playing');
-    bgmToggleBtn.setAttribute('aria-label', '暂停背景音乐');
-    bgmIcon.textContent = '🎵';
-  } else {
-    bgmContainer.classList.remove('playing');
-    bgmToggleBtn.setAttribute('aria-label', '播放背景音乐');
-    bgmIcon.textContent = '🎵';
+function setBgmState(state) {
+  // state: 'playing' | 'paused' | 'loading' | 'error'
+  bgmContainer.classList.remove('playing', 'loading', 'error');
+  switch (state) {
+    case 'playing':
+      bgmContainer.classList.add('playing');
+      bgmIcon.textContent = '🎵';
+      bgmToggleBtn.setAttribute('aria-label', '暂停背景音乐');
+      bgmToggleBtn.title = '正在播放《梦圆》— 点击暂停';
+      break;
+    case 'loading':
+      bgmContainer.classList.add('loading');
+      bgmIcon.textContent = '⏳';
+      bgmToggleBtn.setAttribute('aria-label', '音乐缓冲中');
+      bgmToggleBtn.title = '音乐缓冲中…';
+      break;
+    case 'error':
+      bgmContainer.classList.add('error');
+      bgmIcon.textContent = '🔇';
+      bgmToggleBtn.title = '音乐加载失败，请刷新重试';
+      break;
+    default: // paused
+      bgmIcon.textContent = '🎵';
+      bgmToggleBtn.setAttribute('aria-label', '播放背景音乐');
+      bgmToggleBtn.title = '点击播放《梦圆》';
   }
 }
 
-/* —— 音频事件监听：确保按钮状态与音频实际状态同步 —— */
-bgmAudio.addEventListener('play',  () => setBgmState(true));
-bgmAudio.addEventListener('pause', () => setBgmState(false));
-bgmAudio.addEventListener('ended', () => setBgmState(false));
-bgmAudio.addEventListener('error', () => {
-  setBgmState(false);
-  bgmIcon.textContent = '🔇';
-  bgmToggleBtn.title = '音乐加载失败，请刷新重试';
+/* —— 音频事件监听 —— */
+bgmAudio.addEventListener('play',      () => setBgmState('playing'));
+bgmAudio.addEventListener('pause',     () => { if (!bgmAudio.ended) setBgmState('paused'); });
+bgmAudio.addEventListener('ended',     () => setBgmState('paused'));
+bgmAudio.addEventListener('error',     () => setBgmState('error'));
+
+/* 缓冲中断：音频播放中数据跟不上时显示加载状态，恢复后自动回到播放状态 */
+bgmAudio.addEventListener('waiting',   () => { if (bgmAudio.readyState < 3) setBgmState('loading'); });
+bgmAudio.addEventListener('playing',   () => setBgmState('playing'));
+bgmAudio.addEventListener('canplaythrough', () => {
+  /* 缓冲足够：如果用户之前点了播放，现在自动开始 */
+  if (bgmWantPlay && bgmAudio.paused) {
+    bgmAudio.play().catch(() => setBgmState('error'));
+  }
 });
 
 /* —— 按钮点击：直接控制 MP3 播放/暂停 —— */
 bgmToggleBtn.addEventListener('click', () => {
-  if (bgmAudio.paused) {
-    // 播放：浏览器自动播放策略要求在用户交互内调用 play()
-    bgmAudio.play().catch(err => {
-      console.warn('播放失败:', err.message);
-      setBgmState(false);
-    });
-  } else {
+  if (!bgmAudio.paused && !bgmAudio.ended) {
+    // 正在播放 → 暂停
+    bgmWantPlay = false;
     bgmAudio.pause();
+  } else {
+    // 暂停 → 播放
+    bgmWantPlay = true;
+    if (bgmAudio.readyState >= 3) {
+      // 已缓冲足够，直接播放
+      bgmAudio.play().catch(() => setBgmState('error'));
+    } else {
+      // 缓冲不足，先显示加载状态，等 canplaythrough 事件自动播放
+      setBgmState('loading');
+      // 尝试播放（浏览器会自行缓冲）
+      bgmAudio.play().catch(() => {
+        // 浏览器阻止了自动播放，等待 canplaythrough
+      });
+    }
   }
 });
 
