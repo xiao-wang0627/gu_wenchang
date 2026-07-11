@@ -762,13 +762,232 @@ section{position:relative}
   background:linear-gradient(180deg,var(--paper) 0%,#f0e6d0 100%);
   text-align:center;
 }
-.study-content{
-  max-width:900px;margin:0 auto;padding:2rem 0;
+
+/* —— 研学大合照横幅 —— */
+.study-banner{
+  position:relative;overflow:hidden;
+  width:100vw;margin-left:calc(50% - 50vw);margin-bottom:0;
+  height:480px;
+  box-shadow:var(--shadow-red);
 }
-.study-placeholder{
-  background:#fff;border-radius:24px;padding:4rem 2rem;
-  box-shadow:var(--shadow);border-top:4px solid var(--gold);
-  text-align:center;
+.study-banner img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 6s ease;
+}
+.study-banner:hover img{transform:scale(1.06)}
+.study-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(92,10,10,.15) 0%,rgba(45,5,5,.85) 100%);
+}
+.study-banner-text{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:2.5rem 3rem;text-align:left;
+  max-width:900px;
+}
+.study-banner-text h3{
+  font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.4rem);
+  font-weight:900;color:#fff;margin-bottom:.8rem;letter-spacing:.05em;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.study-banner-text p{
+  font-size:1rem;color:rgba(255,255,255,.85);line-height:1.8;
+  max-width:650px;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);
+}
+.study-banner-badge{
+  display:inline-block;background:var(--gold);color:var(--red-deep);
+  font-size:.75rem;font-weight:700;letter-spacing:.15em;
+  padding:.3rem 1rem;border-radius:50px;margin-bottom:.8rem;
+}
+
+/* —— 研学特色卡片 —— */
+.study-features{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;
+  max-width:900px;margin:0 auto 4rem;
+}
+.study-feature-card{
+  background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:var(--shadow);border-top:3px solid var(--gold);
+  transition:transform .4s,box-shadow .4s;
+}
+.study-feature-card:hover{
+  transform:translateY(-8px);box-shadow:var(--shadow-red);
+}
+.study-feature-img{
+  height:180px;overflow:hidden;position:relative;
+}
+.study-feature-img img{
+  width:100%;height:100%;object-fit:cover;transition:transform .5s;
+}
+.study-feature-card:hover .study-feature-img img{transform:scale(1.1)}
+.study-feature-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(92,10,10,.3) 100%);
+}
+.study-feature-body{padding:1.5rem 1.3rem 1.8rem;text-align:left}
+.study-feature-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--red-primary);color:#fff;
+  font-family:var(--serif);font-size:.85rem;font-weight:900;
+  margin-bottom:.8rem;
+}
+.study-feature-body h4{
+  font-family:var(--serif);font-size:1.05rem;font-weight:700;
+  color:var(--ink);margin-bottom:.5rem;
+}
+.study-feature-body p{
+  font-size:.85rem;color:#666;line-height:1.7;
+}
+
+/* —— 研学流程步骤 —— */
+.study-route-title{
+  font-family:var(--serif);font-size:1.5rem;font-weight:900;
+  color:var(--red-primary);margin-bottom:.5rem;
+}
+.study-route-sub{
+  font-size:.9rem;color:#888;margin-bottom:2.5rem;
+}
+.study-flow{
+  max-width:1000px;margin:0 auto 4rem;
+  display:flex;justify-content:space-between;align-items:stretch;
+  gap:.5rem;text-align:left;
+}
+.flow-step{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  text-align:center;position:relative;padding:0 .5rem;
+}
+.flow-step-num{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red-primary),var(--red-deep));
+  color:#fff;font-family:var(--serif);font-size:1rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;box-shadow:0 4px 15px rgba(185,28,28,.2);
+  flex-shrink:0;
+}
+.flow-step-body{
+  background:#fff;border-radius:14px;padding:1.3rem 1.1rem;
+  box-shadow:var(--shadow);border-top:3px solid var(--gold);
+  flex:1;
+}
+.flow-step-body h4{
+  font-family:var(--serif);font-size:.95rem;font-weight:700;
+  color:var(--red-primary);margin-bottom:.5rem;
+}
+.flow-step-body p{
+  font-size:.8rem;color:#666;line-height:1.65;
+}
+.flow-arrow{
+  position:absolute;right:-12px;top:20px;
+  font-size:1.5rem;color:var(--gold);font-weight:700;
+  z-index:3;
+}
+.flow-step:last-child .flow-arrow{display:none}
+
+@media(max-width:900px){
+  .study-flow{flex-direction:column;gap:1rem}
+  .flow-arrow{display:none !important}
+  .flow-step{flex-direction:row;align-items:flex-start;text-align:left;gap:1rem}
+  .flow-step-num{margin-bottom:0}
+  .flow-step-body{flex:1}
+}
+
+/* —— 研学收获 —— */
+.study-outcomes{
+  max-width:1100px;margin:0 auto;
+}
+.outcomes-header{
+  text-align:center;margin-bottom:2.5rem;
+}
+.outcomes-header h3{
+  font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;
+  color:var(--red-primary);letter-spacing:.15em;
+  display:inline-flex;align-items:center;gap:1rem;
+}
+.outcomes-header h3::before,
+.outcomes-header h3::after{
+  content:'';width:40px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold));
+}
+.outcomes-header h3::after{
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.outcomes-header p{
+  font-size:.9rem;color:#888;margin-top:.6rem;letter-spacing:.08em;
+}
+.outcomes-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;
+}
+.outcome-card{
+  background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow);
+  display:flex;min-height:160px;
+  border-left:4px solid var(--red-primary);
+  transition:transform .35s,box-shadow .35s;
+  position:relative;
+}
+.outcome-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--shadow-red);
+}
+.outcome-card-banner{
+  flex-shrink:0;width:90px;
+  background:linear-gradient(160deg,var(--red-primary) 0%,var(--red-deep) 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--gold-light);position:relative;
+}
+.outcome-card-banner::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:var(--gold);
+}
+.outcome-num{
+  font-family:var(--serif);font-size:2.2rem;font-weight:900;
+  color:var(--gold);line-height:1;
+}
+.outcome-num-label{
+  font-size:.6rem;letter-spacing:.15em;margin-top:.4rem;
+  color:rgba(245,236,217,.7);writing-mode:vertical-rl;
+  text-orientation:upright;letter-spacing:.2em;
+}
+.outcome-card-body{
+  flex:1;padding:1.5rem 1.6rem;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.outcome-card-body h4{
+  font-family:var(--serif);font-size:1.15rem;font-weight:700;
+  color:var(--red-primary);margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.outcome-card-body h4::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(212,175,55,.4),transparent);
+}
+.outcome-card-body p{
+  font-size:.85rem;color:#666;line-height:1.8;
+}
+.outcome-tag{
+  display:inline-block;font-size:.7rem;font-weight:600;
+  color:var(--gold);background:rgba(212,175,55,.1);
+  padding:.2rem .7rem;border-radius:50px;margin-top:.7rem;
+  letter-spacing:.05em;align-self:flex-start;
+}
+
+/* —— 响应式 —— */
+@media(max-width:900px){
+  .study-features{grid-template-columns:repeat(2,1fr)}
+  .outcomes-grid{grid-template-columns:repeat(2,1fr);gap:1.2rem}
+  .study-stop-card{flex-direction:column}
+  .study-stop-img{width:100%;height:160px}
+  .study-banner{height:320px}
+  .study-banner-text{padding:1.5rem}
+}
+@media(max-width:600px){
+  .study-features{grid-template-columns:1fr}
+  .outcomes-grid{grid-template-columns:1fr}
+  .study-banner{height:240px}
+  .study-banner-text{padding:1.2rem}
+  .study-banner-text h3{font-size:1.2rem}
+  .study-banner-text p{font-size:.85rem}
 }
 
 /* ==================== 页脚 ==================== */
@@ -1217,21 +1436,149 @@ footer{
 </section>
 
 <!-- ===== 研学实践 ===== -->
-<section id="study" class="section-pad">
+<section id="study" class="section-pad" style="padding-top:0;">
+  <!-- 研学大合照横幅（全宽） -->
+  <div class="study-banner reveal">
+    <img src="images/study-hero.jpg" alt="谷文昌纪念馆研学大合照" loading="lazy">
+    <div class="study-banner-text">
+      <span class="study-banner-badge">红色研学 · 精神传承</span>
+      <h3>追寻谷公足迹 · 传承红色基因</h3>
+      <p>走进谷文昌纪念馆、谷文昌廉政纪念馆与百里木麻黄林海，开展团课党课学习，在实地参观中感悟"心中有党、心中有民、心中有责、心中有戒"的精神力量。</p>
+    </div>
+  </div>
+
   <div class="section-inner">
     <div class="section-label reveal">
       <span class="bar"></span>
       <span class="text">STUDY &amp; PRACTICE</span>
     </div>
     <h2 class="section-title reveal">研 <span class="accent">学</span> 实 践</h2>
-    <p class="section-desc reveal">以谷文昌精神为引领，开展沉浸式红色文化研学之旅，让革命精神在实践中薪火相传。</p>
+    <p class="section-desc reveal">走进谷文昌纪念馆、廉政纪念馆与百里木麻黄林海，在参观学习中感悟"四有"精神，在团课党课中传承红色基因。</p>
 
-    <!-- ===== 研学文稿占位区（待填充） ===== -->
-    <div class="study-content reveal" id="studyContent">
-      <div class="study-placeholder">
-        <p style="font-size: 1.15rem; color: var(--gold); font-weight: 600; margin-bottom: 1rem;">研学内容即将上线</p>
-        <p style="color: var(--text-muted, #999); line-height: 1.8;">此处将放置研学产品详细介绍文稿，包括研学课程安排、路线规划、报名方式等内容。</p>
-        <p style="color: var(--text-muted, #999); line-height: 1.8; margin-top: 0.5rem;">— 文稿待提供后填充 —</p>
+    <!-- ===== 研学特色 ===== -->
+    <div class="study-features">
+      <div class="study-feature-card reveal">
+        <div class="study-feature-img"><img src="images/study-1.jpg" alt="谷文昌纪念馆参观" loading="lazy"></div>
+        <div class="study-feature-body">
+          <span class="study-feature-num">壹</span>
+          <h4>谷文昌纪念馆参观</h4>
+          <p>参观序厅、生平展厅、丰功伟绩展厅，观看珍贵历史文物与影像资料，全面了解谷文昌同志光辉的一生。</p>
+        </div>
+      </div>
+      <div class="study-feature-card reveal reveal-delay-1">
+        <div class="study-feature-img"><img src="images/study-2.jpg" alt="谷文昌廉政纪念馆参观" loading="lazy"></div>
+        <div class="study-feature-body">
+          <span class="study-feature-num">贰</span>
+          <h4>廉政纪念馆参观</h4>
+          <p>走进谷文昌廉政纪念馆，学习谷文昌廉洁奉公、两袖清风的高尚品格，接受深刻的廉政教育洗礼。</p>
+        </div>
+      </div>
+      <div class="study-feature-card reveal reveal-delay-2">
+        <div class="study-feature-img"><img src="images/study-3.jpg" alt="团课党课学习" loading="lazy"></div>
+        <div class="study-feature-body">
+          <span class="study-feature-num">叁</span>
+          <h4>团课 · 党课教育</h4>
+          <p>在纪念馆研学教室开展主题团课或党课学习，结合参观感悟进行专题研讨，将红色精神内化于心。</p>
+        </div>
+      </div>
+      <div class="study-feature-card reveal reveal-delay-3">
+        <div class="study-feature-img"><img src="images/study-4.jpg" alt="百里木麻黄实地教学" loading="lazy"></div>
+        <div class="study-feature-body">
+          <span class="study-feature-num">肆</span>
+          <h4>百里木麻黄实地教学</h4>
+          <p>走进谷文昌当年带领东山人民栽种的百里木麻黄林海，在绿色长城中开展现场教学，亲身感受"不治服风沙，就让风沙把我埋掉"的铮铮誓言与改天换地的伟大壮举。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 研学流程 ===== -->
+    <h3 class="study-route-title reveal">研 学 流 程</h3>
+    <p class="study-route-sub reveal">四步研学环节，循序渐进，学有所获</p>
+    <div class="study-flow reveal">
+      <div class="flow-step">
+        <div class="flow-step-num">01</div>
+        <div class="flow-step-body">
+          <h4>谷文昌纪念馆参观</h4>
+          <p>参观纪念馆序厅、生平展厅、丰功伟绩展厅，观看珍贵历史文物与影像资料，了解谷文昌同志从参加革命到主政东山的生平历程与丰功伟绩。</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">02</div>
+        <div class="flow-step-body">
+          <h4>廉政纪念馆参观</h4>
+          <p>前往谷文昌廉政纪念馆，学习谷文昌"当领导的要先把自己的手洗净"的廉洁自律精神，接受深刻的廉政教育洗礼。</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">03</div>
+        <div class="flow-step-body">
+          <h4>百里木麻黄实地教学</h4>
+          <p>走进百里木麻黄林海，在谷文昌亲手缔造的"绿色长城"中开展现场教学，感受当年治沙造林的艰辛与改天换地的伟大壮举。</p>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">04</div>
+        <div class="flow-step-body">
+          <h4>团课 / 党课学习</h4>
+          <p>在研学教室开展主题团课或党课，结合参观感悟进行讨论分享，撰写研学心得，将红色精神内化于心、外化于行。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 研学收获 ===== -->
+    <div class="study-outcomes reveal">
+      <div class="outcomes-header">
+        <h3>研 学 收 获</h3>
+        <p>走进谷公世界，汲取精神力量</p>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="outcome-card-banner">
+            <div class="outcome-num">壹</div>
+            <div class="outcome-num-label">知识</div>
+          </div>
+          <div class="outcome-card-body">
+            <h4>红色历史认知</h4>
+            <p>全面了解谷文昌同志从参加革命到主政东山的生平历程，深入认知东山岛治沙造林的伟大壮举与历史背景。</p>
+            <span class="outcome-tag">党史学习 · 历史认知</span>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-card-banner">
+            <div class="outcome-num">贰</div>
+            <div class="outcome-num-label">精神</div>
+          </div>
+          <div class="outcome-card-body">
+            <h4>"四有"精神感悟</h4>
+            <p>在实地参观中感悟"心中有党、心中有民、心中有责、心中有戒"的精神内涵，坚定理想信念，厚植为民情怀。</p>
+            <span class="outcome-tag">理想信念 · 为民情怀</span>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-card-banner">
+            <div class="outcome-num">叁</div>
+            <div class="outcome-num-label">廉政</div>
+          </div>
+          <div class="outcome-card-body">
+            <h4>廉洁自律教育</h4>
+            <p>通过廉政纪念馆参观学习，深刻领悟谷文昌"当领导的要先把自己的手洗净"的廉洁品格，筑牢廉洁自律思想防线。</p>
+            <span class="outcome-tag">廉洁奉公 · 自律自省</span>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-card-banner">
+            <div class="outcome-num">肆</div>
+            <div class="outcome-num-label">实践</div>
+          </div>
+          <div class="outcome-card-body">
+            <h4>知行合一践行</h4>
+            <p>通过百里木麻黄实地教学与团课党课研讨，将参观感悟转化为行动自觉，在各自岗位上践行谷公精神。</p>
+            <span class="outcome-tag">学以致用 · 知行合一</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
