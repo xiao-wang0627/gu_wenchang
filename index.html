@@ -1003,6 +1003,25 @@ footer{
 .footer-text{font-size:.82rem;line-height:1.8;margin-bottom:1rem}
 .footer-copy{font-size:.75rem;color:rgba(245,236,217,.4);border-top:1px solid rgba(212,175,55,.1);padding-top:1.2rem;margin-top:1.2rem}
 
+/* ===== 校徽 + 团队信息 ===== */
+.footer-team{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  margin:1.8rem auto;padding:.8rem 1.5rem;
+  max-width:480px;
+  border:1px solid rgba(212,175,55,.18);border-radius:12px;
+  background:rgba(0,0,0,.15);
+}
+.footer-logo{width:56px;height:56px;flex-shrink:0;border-radius:50%;object-fit:cover}
+.footer-logo-placeholder{
+  width:56px;height:56px;flex-shrink:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(212,175,55,.12);border:1px dashed rgba(212,175,55,.35);
+  font-size:1.1rem;color:rgba(212,175,55,.5);
+}
+.footer-team-info{text-align:left;line-height:1.6}
+.footer-team-label{font-size:.72rem;color:rgba(245,236,217,.45);letter-spacing:.05em}
+.footer-team-name{font-size:1rem;color:var(--gold);font-weight:600;letter-spacing:.05em}
+
 /* ==================== 传统印章饰件 ==================== */
 .seal-stamp {
   display: inline-flex;
@@ -1591,6 +1610,18 @@ footer{
   <div class="footer-brand">★ 谷文昌纪念馆 · 红色文化数字化展厅</div>
   <p class="footer-text">心中有党 · 心中有民 · 心中有责 · 心中有戒</p>
   <p class="footer-text">本展厅为数字化展示用途，致敬人民的好书记——谷文昌同志</p>
+
+  <!-- 校徽 + 实践团队 -->
+  <div class="footer-team">
+    <img src="images/school-logo.jpg" alt="校徽" class="footer-logo"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="footer-logo-placeholder" style="display:none">校徽</div>
+    <div class="footer-team-info">
+      <div class="footer-team-label">暑期社会实践团队</div>
+      <div class="footer-team-name">E路逐梦</div>
+    </div>
+  </div>
+
   <p class="footer-copy">© 2026 谷文昌纪念馆数字展厅 · Red Culture Digital Exhibition Hall</p>
 </footer>
 
