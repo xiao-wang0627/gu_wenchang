@@ -757,253 +757,18 @@ section{position:relative}
   font-size:.82rem;color:var(--gold-light);letter-spacing:.1em;
 }
 
-/* ==================== 薪火相传 ==================== */
-#legacy{
+/* ==================== 研学实践 ==================== */
+#study{
   background:linear-gradient(180deg,var(--paper) 0%,#f0e6d0 100%);
   text-align:center;
 }
-.legacy-hero{
-  max-width:700px;margin:0 auto 3rem;
+.study-content{
+  max-width:900px;margin:0 auto;padding:2rem 0;
 }
-.legacy-hero h2{
-  font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:900;
-  color:var(--red-primary);margin-bottom:1rem;
-}
-.legacy-hero p{font-size:1.1rem;color:#555;line-height:2}
-.legacy-stats{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
-  max-width:900px;margin:0 auto 3rem;
-}
-.stat-item{text-align:center}
-.stat-num{
-  font-family:var(--serif);font-size:clamp(2rem,4vw,3.8rem);font-weight:900;
-  color:var(--red-primary);line-height:1;
-}
-.stat-unit{font-size:1rem;color:var(--red-primary);font-weight:700}
-.stat-label{font-size:.85rem;color:#888;margin-top:.5rem;letter-spacing:.1em}
-.legacy-tribute{
-  max-width:600px;margin:3rem auto 0;
-  background:#fff;border-radius:20px;padding:2.5rem;
+.study-placeholder{
+  background:#fff;border-radius:24px;padding:4rem 2rem;
   box-shadow:var(--shadow);border-top:4px solid var(--gold);
-}
-.tribute-stars{
-  display:flex;justify-content:center;gap:.5rem;margin-bottom:1rem;
-}
-.tribute-star{
-  width:16px;height:16px;background:var(--gold);
-  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
-}
-.tribute-text{
-  font-family:var(--serif);font-size:1.1rem;color:var(--ink);
-  line-height:2;font-style:italic;
-}
-.tribute-author{
-  margin-top:1rem;font-size:.85rem;color:var(--red-primary);
-  letter-spacing:.1em;font-weight:600;
-}
-
-/* ==================== 线上致敬与留言 ==================== */
-.tribute-interactive {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(92, 10, 10, 0.12);
-  border-radius: 24px;
-  padding: 2.5rem 2rem;
-  max-width: 800px;
-  margin: 3.5rem auto 4rem;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 5;
-  box-shadow: var(--shadow);
-}
-.tribute-btn-group {
-  display: flex;
-  justify-content: center;
-  gap: 2.5rem;
-  margin-bottom: 1.5rem;
-}
-.tribute-btn {
-  border: none;
-  background: #fff;
-  border-radius: 50px;
-  padding: 0.8rem 2.5rem;
-  font-size: 1.05rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-  outline: none;
-}
-.tribute-btn-flower {
-  color: #c94b7c;
-  border: 2px solid #f6d1df;
-}
-.tribute-btn-flower:hover {
-  background: #fff0f5;
-  border-color: #c94b7c;
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(201, 75, 124, 0.18);
-}
-.tribute-btn-salute {
-  color: var(--red-primary);
-  border: 2px solid rgba(185, 28, 28, 0.2);
-}
-.tribute-btn-salute:hover {
-  background: #fff5f5;
-  border-color: var(--red-primary);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(185, 28, 28, 0.18);
-}
-.tribute-btn:active {
-  transform: translateY(-1px);
-}
-.btn-icon {
-  font-size: 1.3rem;
-  transition: transform 0.3s;
-}
-.tribute-btn:hover .btn-icon {
-  transform: scale(1.2) rotate(15deg);
-}
-.tribute-counter {
-  font-size: 0.95rem;
-  color: var(--ink-soft);
-  margin-top: 1rem;
-}
-.counter-num {
-  font-weight: 700;
-  color: var(--red-primary);
-  font-size: 1.15rem;
-}
-.tribute-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3000;
-  width: 100%;
-  height: 100%;
-}
-
-.guestbook-section {
-  max-width: 900px;
-  margin: 4.5rem auto 0;
-  text-align: left;
-}
-.guestbook-title {
-  font-family: var(--serif);
-  font-size: 2.1rem;
-  color: var(--red-primary);
-  text-align: center;
-  margin-bottom: 0.5rem;
-  font-weight: 900;
-}
-.guestbook-subtitle {
-  text-align: center;
-  color: #666;
-  font-size: 0.95rem;
-  margin-bottom: 2.5rem;
-}
-.guestbook-form {
-  background: #fff;
-  border-radius: 24px;
-  padding: 2.2rem;
-  box-shadow: var(--shadow);
-  border-top: 4px solid var(--red-primary);
-  margin-bottom: 3.5rem;
-}
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-.guestbook-form input,
-.guestbook-form textarea {
-  width: 100%;
-  border: 1px solid rgba(0,0,0,0.1);
-  background: var(--paper);
-  border-radius: 10px;
-  padding: 0.85rem 1.1rem;
-  font-family: var(--sans);
-  font-size: 0.95rem;
-  color: var(--ink);
-  transition: all 0.3s;
-}
-.guestbook-form input:focus,
-.guestbook-form textarea:focus {
-  outline: none;
-  border-color: var(--red-primary);
-  background: #fff;
-  box-shadow: 0 0 8px rgba(185, 28, 28, 0.15);
-}
-.guestbook-form textarea {
-  height: 110px;
-  resize: none;
-  margin-bottom: 1.5rem;
-}
-.guestbook-submit-btn {
-  background: linear-gradient(135deg, var(--red-primary), var(--red-deep));
-  color: #fff;
-  border: none;
-  padding: 0.85rem 2.6rem;
-  border-radius: 50px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 5px 18px rgba(185, 28, 28, 0.2);
-}
-.guestbook-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(185, 28, 28, 0.4);
-}
-.guestbook-wall {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.guestbook-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 1.6rem;
-  box-shadow: var(--shadow);
-  border-left: 3px solid var(--gold);
-  transition: transform 0.3s, box-shadow 0.3s;
-  animation: cardFadeIn 0.5s ease-out both;
-}
-@keyframes cardFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.guestbook-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-red);
-}
-.guestbook-card p {
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-  line-height: 1.65;
-  margin-bottom: 1rem;
-  font-style: italic;
-}
-.guestbook-card .card-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(0,0,0,0.05);
-  padding-top: 0.75rem;
-}
-.guestbook-card .meta-name {
-  font-weight: 700;
-  color: var(--red-primary);
-  font-size: 0.82rem;
-}
-.guestbook-card .meta-info {
-  color: #999;
-  font-size: 0.75rem;
+  text-align:center;
 }
 
 /* ==================== 页脚 ==================== */
@@ -1124,13 +889,12 @@ footer{
     
     <div class="nav-right-controls">
       <ul class="nav-links">
-        <li><a href="#timeline">生平历程</a></li>
         <li><a href="#deeds">丰功伟绩</a></li>
         <li><a href="#transformation">东山巨变</a></li>
         <li><a href="#spirit">精神丰碑</a></li>
         <li><a href="#artifacts">数字文物</a></li>
         <li><a href="#quotes">谆谆教诲</a></li>
-        <li><a href="#legacy">薪火相传</a></li>
+        <li><a href="#study">研学实践</a></li>
       </ul>
       
       <!-- BGM Player in Navbar -->
@@ -1155,132 +919,13 @@ footer{
     <h1 class="hero-title">谷文昌</h1>
     <p class="hero-subtitle">人 民 的 好 书 记</p>
     <p class="hero-quote">不治服风沙，就让风沙把我埋掉</p>
-    <button class="hero-cta" onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">
+    <button class="hero-cta" onclick="document.getElementById('deeds').scrollIntoView({behavior:'smooth'})">
       走 进 展 厅 →
     </button>
   </div>
   <div class="hero-scroll">
     <span>向下滚动</span>
     <div class="line"></div>
-  </div>
-</section>
-
-<!-- ===== 生平时间线 ===== -->
-<section id="timeline" class="section-pad">
-  <div class="section-inner">
-    <div class="section-label reveal">
-      <span class="bar"></span>
-      <span class="text">LIFE CHRONOLOGY</span>
-    </div>
-    <h2 class="section-title reveal" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-      生 <span class="accent">平</span> 历 程
-      <div class="seal-stamp">
-        <div class="seal-row"><span>纪</span><span>谷</span></div>
-        <div class="seal-row"><span>念</span><span>公</span></div>
-      </div>
-    </h2>
-    <p class="section-desc reveal">谷文昌（1915—1981），河南林州人，1943年加入中国共产党。1950年随军南下福建东山，历任东山县县长、县委书记，在东山岛奋斗十四年，将荒漠孤岛变成绿洲绿岛。</p>
-
-    <div class="timeline-wrap">
-      <div class="timeline-line"></div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1915</div>
-            <h3>出生于河南林县</h3>
-            <p>10月15日生于河南省林县（今林州市）郭家庄的一户贫农家庭，自幼放牛砍柴，饱尝旧社会苦难。</p>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-empty"></div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-empty"></div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1943</div>
-            <h3>投身革命 加入共产党</h3>
-            <p>参加抗日民兵，同年加入中国共产党。历任村农会主席、区委书记，在枪林弹雨中淬炼革命信念。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1950</div>
-            <h3>随军南下 解放东山</h3>
-            <p>随长江支队南下福建，5月12日东山岛解放。谷文昌留任东山，开启了他与这座海岛十四年的不解之缘。</p>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-empty"></div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-empty"></div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1955</div>
-            <h3>就任东山县委书记</h3>
-            <p>出任东山县委书记，面对风沙肆虐、民生凋敝的困境，立下"不治服风沙，就让风沙把我埋掉"的铮铮誓言。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1958</div>
-            <h3>木麻黄治沙 取得突破</h3>
-            <p>历经多次试种失败，终于找到适合东山海岛的木麻黄树种。带领全县人民掀起植树造林热潮，筑起"绿色长城"。</p>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-empty"></div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-empty"></div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1964</div>
-            <h3>调离东山 调任省林业厅</h3>
-            <p>调任福建省林业厅副厅长。离开东山时，全岛已造林8.2万亩，昔日的荒沙岛变成了绿洲。百姓夹道相送，泪洒长街。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">1981</div>
-            <h3>与世长辞 魂归东山</h3>
-            <p>1月30日在福州病逝。遵其遗愿，骨灰安葬于东山赤山林场——他亲手栽下的木麻黄林中。东山百姓形成"先祭谷公，后祭祖宗"的习俗。</p>
-          </div>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-empty"></div>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-empty"></div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="timeline-card">
-            <div class="timeline-year">2015</div>
-            <h3>习近平赞"四有"干部楷模</h3>
-            <p>习近平总书记在中央党校县委书记研修班上，高度赞扬谷文昌为"心中有党、心中有民、心中有责、心中有戒"的"四有"干部楷模。</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
 
@@ -1571,82 +1216,24 @@ footer{
   </div>
 </section>
 
-<!-- ===== 薪火相传 ===== -->
-<section id="legacy" class="section-pad">
+<!-- ===== 研学实践 ===== -->
+<section id="study" class="section-pad">
   <div class="section-inner">
-    <div class="legacy-hero reveal">
-      <h2>薪 火 相 传</h2>
-      <p>谷文昌虽然离开了我们，但他的精神永存。东山百姓"先祭谷公，后祭祖宗"的习俗延续至今，成为共产党人精神丰碑的生动注脚。</p>
+    <div class="section-label reveal">
+      <span class="bar"></span>
+      <span class="text">STUDY &amp; PRACTICE</span>
     </div>
+    <h2 class="section-title reveal">研 <span class="accent">学</span> 实 践</h2>
+    <p class="section-desc reveal">以谷文昌精神为引领，开展沉浸式红色文化研学之旅，让革命精神在实践中薪火相传。</p>
 
-    <div class="legacy-stats">
-      <div class="stat-item reveal">
-        <div class="stat-num">8.2<span class="stat-unit">万亩</span></div>
-        <div class="stat-label">治 沙 造 林</div>
-      </div>
-      <div class="stat-item reveal reveal-delay-1">
-        <div class="stat-num">14<span class="stat-unit">年</span></div>
-        <div class="stat-label">扎 根 东 山</div>
-      </div>
-      <div class="stat-item reveal reveal-delay-2">
-        <div class="stat-num">4700<span class="stat-unit">户</span></div>
-        <div class="stat-label">惠 及 百 姓</div>
-      </div>
-      <div class="stat-item reveal reveal-delay-3">
-        <div class="stat-num">40<span class="stat-unit">余年</span></div>
-        <div class="stat-label">精 神 传 承</div>
+    <!-- ===== 研学文稿占位区（待填充） ===== -->
+    <div class="study-content reveal" id="studyContent">
+      <div class="study-placeholder">
+        <p style="font-size: 1.15rem; color: var(--gold); font-weight: 600; margin-bottom: 1rem;">研学内容即将上线</p>
+        <p style="color: var(--text-muted, #999); line-height: 1.8;">此处将放置研学产品详细介绍文稿，包括研学课程安排、路线规划、报名方式等内容。</p>
+        <p style="color: var(--text-muted, #999); line-height: 1.8; margin-top: 0.5rem;">— 文稿待提供后填充 —</p>
       </div>
     </div>
-
-    <!-- 线上互动致敬区 -->
-    <div class="tribute-interactive reveal">
-      <div class="tribute-btn-group">
-        <button id="btnFlower" class="tribute-btn tribute-btn-flower">
-          <span class="btn-icon">🌸</span>
-          <span class="btn-lbl">线上献花</span>
-        </button>
-        <button id="btnSalute" class="tribute-btn tribute-btn-salute">
-          <span class="btn-icon">⭐</span>
-          <span class="btn-lbl">肃立敬礼</span>
-        </button>
-      </div>
-      <p class="tribute-counter">已累计致敬：献花 <span id="flowerCount" class="counter-num">12,458</span> 朵，敬礼 <span id="saluteCount" class="counter-num">8,962</span> 次</p>
-    </div>
-    
-    <!-- Tribute particles canvas -->
-    <canvas id="tributeCanvas" class="tribute-canvas"></canvas>
-
-    <div class="legacy-tribute reveal">
-      <div class="tribute-stars">
-        <span class="tribute-star"></span>
-        <span class="tribute-star"></span>
-        <span class="tribute-star"></span>
-        <span class="tribute-star"></span>
-        <span class="tribute-star"></span>
-      </div>
-      <p class="tribute-text">"谷文昌同志的事迹同焦裕禄、杨善洲的事迹一样，展示了中国共产党人的为民情怀、高尚品格、革命精神。"</p>
-      <p class="tribute-author">—— 习近平<span class="china-stamp">为民楷模</span></p>
-    </div>
-
-    <!-- 寄语墙 -->
-    <div class="guestbook-section reveal">
-      <h3 class="guestbook-title">缅怀寄语</h3>
-      <p class="guestbook-subtitle">留下您的瞻仰心声，将革命精神代代相传</p>
-      
-      <form id="guestbookForm" class="guestbook-form">
-        <div class="form-row">
-          <input type="text" id="guestName" placeholder="您的姓名/昵称" required maxlength="15">
-          <input type="text" id="guestLoc" placeholder="您的省份/地区（选填）" maxlength="15">
-        </div>
-        <textarea id="guestContent" placeholder="写下您的瞻仰感言..." required maxlength="200"></textarea>
-        <button type="submit" class="guestbook-submit-btn">提交寄语</button>
-      </form>
-
-      <div class="guestbook-wall" id="guestbookWall">
-        <!-- Message cards loaded dynamically -->
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -1680,20 +1267,6 @@ window.addEventListener('scroll',()=>{
   const docH=document.documentElement.scrollHeight-window.innerHeight;
   const pct=(sc/docH)*100;
   navProgress.style.width=pct+'%';
-});
-
-// ===== 时间线滚动高亮 =====
-const timelineItems = document.querySelectorAll('.timeline-item');
-window.addEventListener('scroll', () => {
-  const triggerBottom = window.innerHeight * 0.75;
-  timelineItems.forEach(item => {
-    const rect = item.getBoundingClientRect();
-    if (rect.top < triggerBottom) {
-      item.classList.add('active');
-    } else {
-      item.classList.remove('active');
-    }
-  });
 });
 
 // ===== 滚动揭示动画 =====
@@ -1999,197 +1572,6 @@ bgmToggleBtn.addEventListener('click', () => {
     }
   }
 });
-
-// ===== 线上致敬粒子特效 (Confetti) =====
-const tributeCanvas = document.getElementById('tributeCanvas');
-const tCtx = tributeCanvas.getContext('2d');
-let tributeParticles = [];
-
-function resizeTributeCanvas() {
-  tributeCanvas.width = window.innerWidth;
-  tributeCanvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeTributeCanvas);
-resizeTributeCanvas();
-
-class TributeParticle {
-  constructor(x, y, type) {
-    this.x = x;
-    this.y = y;
-    this.type = type; // 'flower' or 'star'
-    this.size = Math.random() * 8 + 5;
-    this.angle = Math.random() * Math.PI * 2;
-    this.speed = Math.random() * 5 + 4;
-    this.vx = Math.cos(this.angle) * this.speed;
-    this.vy = Math.sin(this.angle) * this.speed - 3.5; // push up
-    this.gravity = 0.22;
-    this.alpha = 1;
-    this.decay = Math.random() * 0.018 + 0.01;
-    this.rotation = Math.random() * Math.PI;
-    this.rotationSpeed = (Math.random() - 0.5) * 0.12;
-    
-    if (this.type === 'flower') {
-      const colors = ['#f687b3', '#f6a5c0', '#f6c7da', '#e9d8a6'];
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-    } else {
-      const colors = ['#ecc94b', '#f6e05e', '#d69e2e', '#faf089'];
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-    }
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vy += this.gravity;
-    this.alpha -= this.decay;
-    this.rotation += this.rotationSpeed;
-  }
-  draw() {
-    tCtx.save();
-    tCtx.translate(this.x, this.y);
-    tCtx.rotate(this.rotation);
-    tCtx.globalAlpha = this.alpha;
-    tCtx.fillStyle = this.color;
-    
-    if (this.type === 'flower') {
-      tCtx.beginPath();
-      for (let i = 0; i < 5; i++) {
-        tCtx.rotate(Math.PI * 2 / 5);
-        tCtx.ellipse(0, -this.size/2, this.size/3.2, this.size/1.8, 0, 0, Math.PI * 2);
-      }
-      tCtx.fill();
-    } else {
-      tCtx.beginPath();
-      for (let i = 0; i < 5; i++) {
-        tCtx.lineTo(0, -this.size);
-        tCtx.rotate(Math.PI / 5);
-        tCtx.lineTo(0, -this.size / 2.2);
-        tCtx.rotate(Math.PI / 5);
-      }
-      tCtx.closePath();
-      tCtx.fill();
-    }
-    tCtx.restore();
-  }
-}
-
-function spawnTributeConfetti(e, type) {
-  let x = window.innerWidth / 2;
-  let y = window.innerHeight * 0.8;
-  
-  if (e) {
-    x = e.clientX;
-    y = e.clientY;
-  }
-  
-  for (let i = 0; i < 35; i++) {
-    tributeParticles.push(new TributeParticle(x, y, type));
-  }
-}
-
-// Fixed variable scoping in requestAnimationFrame
-function animateTribute() {
-  tCtx.clearRect(0, 0, tributeCanvas.width, tributeCanvas.height);
-  tributeParticles.forEach(p => {
-    p.update();
-    p.draw();
-  });
-  tributeParticles = tributeParticles.filter(p => p.alpha > 0);
-  requestAnimationFrame(animateTribute);
-}
-
-// Counters & Sound triggers
-let flowers = parseInt(localStorage.getItem('tribute_flowers') || '12458');
-let salutes = parseInt(localStorage.getItem('tribute_salutes') || '8962');
-
-document.getElementById('flowerCount').innerText = flowers.toLocaleString();
-document.getElementById('saluteCount').innerText = salutes.toLocaleString();
-
-document.getElementById('btnFlower').addEventListener('click', (e) => {
-  flowers++;
-  localStorage.setItem('tribute_flowers', flowers);
-  document.getElementById('flowerCount').innerText = flowers.toLocaleString();
-  spawnTributeConfetti(e, 'flower');
-  playTributeSound(440.00); 
-});
-
-document.getElementById('btnSalute').addEventListener('click', (e) => {
-  salutes++;
-  localStorage.setItem('tribute_salutes', salutes);
-  document.getElementById('saluteCount').innerText = salutes.toLocaleString();
-  spawnTributeConfetti(e, 'star');
-  playTributeSound(554.37); 
-});
-
-function playTributeSound(freq) {
-  try {
-    const actx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = actx.createOscillator();
-    const gain = actx.createGain();
-    
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(freq, actx.currentTime);
-    
-    gain.gain.setValueAtTime(0, actx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.08, actx.currentTime + 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.6);
-    
-    osc.connect(gain);
-    gain.connect(actx.destination);
-    
-    osc.start();
-    osc.stop(actx.currentTime + 0.6);
-  } catch (err) {
-    // blocked or not supported
-  }
-}
-
-// ===== 留言墙 (Guestbook) =====
-const defaultComments = [
-  { name: "张华敏", loc: "福建厦门", content: "十四年治沙造林，功在当代，利在千秋。向谷书记致敬，我们要以他为楷模，心中有民，脚踏实地。" },
-  { name: "李建国", loc: "河南林州", content: "作为家乡人，看到东山岛如今的海岛绿洲，内心无比激动与自豪。谷公精神永放光芒！" },
-  { name: "红旗漫卷", loc: "北京", content: "心中的四有楷模，廉洁奉公，两袖清风。每次来东山岛，先祭谷公已成了发自肺腑的敬仰。" }
-];
-
-function loadComments() {
-  let stored = localStorage.getItem('guestbook_comments');
-  let comments = stored ? JSON.parse(stored) : defaultComments;
-  
-  const wall = document.getElementById('guestbookWall');
-  wall.innerHTML = '';
-  
-  comments.slice().reverse().forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'guestbook-card';
-    card.innerHTML = `
-      <p>"${c.content}"</p>
-      <div class="card-meta">
-        <span class="meta-name">${c.name}</span>
-        <span class="meta-info">${c.loc || '瞻仰者'}</span>
-      </div>
-    `;
-    wall.appendChild(card);
-  });
-}
-
-document.getElementById('guestbookForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('guestName').value.trim();
-  const loc = document.getElementById('guestLoc').value.trim();
-  const content = document.getElementById('guestContent').value.trim();
-  
-  let stored = localStorage.getItem('guestbook_comments');
-  let comments = stored ? JSON.parse(stored) : defaultComments;
-  
-  comments.push({ name, loc, content });
-  localStorage.setItem('guestbook_comments', JSON.stringify(comments));
-  
-  loadComments();
-  
-  document.getElementById('guestbookForm').reset();
-  spawnTributeConfetti(null, 'star');
-});
-
-loadComments();
 </script>
 
 </body>
