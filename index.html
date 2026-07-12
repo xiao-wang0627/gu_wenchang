@@ -515,9 +515,15 @@ section{position:relative}
 .spirit-card::before{
   content:'';position:absolute;inset:0;z-index:0;
   background-size:cover;background-position:center;
-  opacity:.18;transition:opacity .4s;
+  opacity:.28;transition:opacity .4s;
 }
-.spirit-card:hover::before{opacity:.32}
+.spirit-card::after{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:linear-gradient(135deg,rgba(139,10,10,.55) 0%,rgba(92,5,5,.65) 100%);
+  mix-blend-mode:multiply;transition:opacity .4s;
+}
+.spirit-card:hover::before{opacity:.4}
+.spirit-card:hover::after{opacity:.7}
 .spirit-card-1::before{background-image:url('images/spirit-1.jpg')}
 .spirit-card-2::before{background-image:url('images/spirit-2.jpg')}
 .spirit-card-3::before{background-image:url('images/spirit-3.jpg')}
