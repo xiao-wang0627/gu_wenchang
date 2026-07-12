@@ -510,7 +510,19 @@ section{position:relative}
   background:rgba(255,255,255,.05);border:1px solid rgba(212,175,55,.18);
   border-radius:22px;padding:2.5rem 1.6rem;text-align:center;
   transition:all .4s cubic-bezier(0.16, 1, 0.3, 1);backdrop-filter:blur(10px);
+  position:relative;overflow:hidden;
 }
+.spirit-card::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background-size:cover;background-position:center;
+  opacity:.18;transition:opacity .4s;
+}
+.spirit-card:hover::before{opacity:.32}
+.spirit-card-1::before{background-image:url('images/portrait.jpg')}
+.spirit-card-2::before{background-image:url('images/planting.jpg')}
+.spirit-card-3::before{background-image:url('images/green.jpg')}
+.spirit-card-4::before{background-image:url('images/work.jpg')}
+.spirit-card > *{position:relative;z-index:1}
 .spirit-card:hover{
   background:rgba(212,175,55,.12);border-color:var(--gold);
   transform:translateY(-10px);box-shadow:0 20px 50px rgba(212,175,55,.25);
@@ -1262,25 +1274,25 @@ footer{
     <p class="section-desc reveal">习近平总书记将谷文昌精神凝练为"四有"——心中有党、心中有民、心中有责、心中有戒。这是共产党人的精神坐标，也是新时代的价值航标。</p>
 
     <div class="spirit-grid">
-      <div class="spirit-card reveal">
+      <div class="spirit-card spirit-card-1 reveal">
         <div class="spirit-num">壹</div>
         <h3>心中有党</h3>
         <p>信念坚定，对党忠诚。无论身处顺境逆境，始终坚守共产党人的理想信念，听党话、跟党走，把党的事业放在心中最高位置。</p>
       </div>
 
-      <div class="spirit-card reveal reveal-delay-1">
+      <div class="spirit-card spirit-card-2 reveal reveal-delay-1">
         <div class="spirit-num">贰</div>
         <h3>心中有民</h3>
         <p>一心为民，心系百姓。视人民为父母，把群众利益放在首位。"不把人民救出苦难，共产党来干什么"是他的赤诚心声。</p>
       </div>
 
-      <div class="spirit-card reveal reveal-delay-2">
+      <div class="spirit-card spirit-card-3 reveal reveal-delay-2">
         <div class="spirit-num">叁</div>
         <h3>心中有责</h3>
         <p>敢于担当，迎难而上。面对风沙之患，他立下铮铮誓言；面对复杂历史遗留问题，他力排众议，以"功成不必在我"的胸怀干事创业。</p>
       </div>
 
-      <div class="spirit-card reveal reveal-delay-3">
+      <div class="spirit-card spirit-card-4 reveal reveal-delay-3">
         <div class="spirit-num">肆</div>
         <h3>心中有戒</h3>
         <p>廉洁奉公，严于律己。不谋私利，不搞特殊，清白做人，干净做事。"把自己的手洗净，把腰杆挺直"，是他对干部的基本要求。</p>
