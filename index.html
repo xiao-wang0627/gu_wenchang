@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>谷文昌纪念馆 · 红色文化数字化展厅</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preload" as="image" href="images/portrait.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -2028,6 +2029,27 @@ bgmToggleBtn.addEventListener('click', () => {
       bgmUserPaused = false;  // 用户主动播放 → 恢复自动播放许可
     }
   }, true /* 捕获阶段，先于按钮自身的处理器执行，读取点击前状态 */);
+})();
+
+/* —— 首屏优先：等页面主内容渲染完成、带宽空闲后，再预取音频 ——
+   避免音频与首屏大图（hero 背景、序厅图）抢带宽导致图片加载慢。
+   音频只在用户首次交互时才真正播放，此处理仅提前缓冲，播放时即刻出声。 */
+(function(){
+  var prefetched = false;
+  function prefetchAudio() {
+    if (prefetched) return;
+    prefetched = true;
+    try {
+      bgmAudio.preload = 'auto';   // 触发后台缓冲（不播放）
+      bgmAudio.load();
+    } catch (e) {}
+  }
+  // 页面 load 完成（首屏图片已就绪）后，再等 1.5s 让带宽空闲
+  if (document.readyState === 'complete') {
+    setTimeout(prefetchAudio, 1500);
+  } else {
+    window.addEventListener('load', function(){ setTimeout(prefetchAudio, 1500); });
+  }
 })();
 </script>
 
