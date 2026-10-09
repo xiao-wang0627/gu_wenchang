@@ -6,6 +6,7 @@
 <title>谷文昌纪念馆 · 红色文化数字化展厅</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ==================== 基础重置 ==================== */
@@ -1159,7 +1160,7 @@ footer{
         <button id="bgmToggleBtn" class="nav-bgm-btn" aria-label="播放背景音乐">
           <span class="bgm-icon">🎵</span>
         </button>
-        <audio id="bgmAudio" loop preload="auto" src="mengyuan.mp3"></audio>
+        <audio id="bgmAudio" loop preload="none" src="mengyuan.mp3"></audio>
       </div>
     </div>
   </div>
@@ -1646,9 +1647,24 @@ footer{
 
 <script>
 // ===== 加载页 =====
-window.addEventListener('load',()=>{
-  setTimeout(()=>document.getElementById('loader').classList.add('done'),1500);
-});
+// 不等所有图片下载完：DOM 就绪后稍作停顿即隐藏加载页，加快首屏可交互时间
+(function(){
+  var hideLoader = function(){
+    var el = document.getElementById('loader');
+    if (el) el.classList.add('done');
+  };
+  // 最迟 2.5 秒强制隐藏，避免个别资源拖慢整页
+  var hardStop = setTimeout(hideLoader, 2500);
+  var onReady = function(){
+    clearTimeout(hardStop);
+    setTimeout(hideLoader, 700);
+  };
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    onReady();
+  } else {
+    document.addEventListener('DOMContentLoaded', onReady);
+  }
+})();
 
 // ===== 导航栏显隐 + 进度条 =====
 const navbar=document.getElementById('navbar');
