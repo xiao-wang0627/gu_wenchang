@@ -1685,8 +1685,8 @@ footer{
     if (pctEl) pctEl.textContent = '正在加载展厅资源 ' + p + '%';
   };
 
-  // 2) 兜底：最长等待 8 秒，避免个别资源卡住整页
-  var hardStop = setTimeout(hideLoader, 8000);
+  // 2) 兜底：最长等待 12 秒，避免个别资源卡住整页
+  var hardStop = setTimeout(hideLoader, 12000);
 
   if (total === 0) {
     update(); clearTimeout(hardStop); hideLoader(); return;
