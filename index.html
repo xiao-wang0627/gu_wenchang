@@ -1985,6 +1985,50 @@ bgmToggleBtn.addEventListener('click', () => {
     }
   }
 });
+
+/* —— 自动播放：用户首次交互（点击/滚动/触摸/按键）时自动启动音乐 ——
+   浏览器禁止无交互自动播放，此方案在用户第一次操作页面时立即播放，
+   无需手动点击音乐按钮。若用户已手动暂停音乐，则不再自动播放。 */
+(function(){
+  let bgmAutoDone = false;      // 自动播放是否已触发过
+  let bgmUserPaused = false;    // 用户是否主动暂停过音乐
+  const AUTO_EVENTS = ['click', 'touchstart', 'keydown', 'scroll', 'wheel', 'pointerdown'];
+
+  function tryAutoPlay() {
+    if (bgmAutoDone || bgmUserPaused) return;
+    if (!bgmAudio.paused && !bgmAudio.ended) { bgmAutoDone = true; return; }
+    bgmAutoDone = true;
+    bgmWantPlay = true;
+    setBgmState('loading');
+    const p = bgmAudio.play();
+    if (p && p.catch) {
+      p.catch(() => {
+        // 仍被拦截：重置标记，等待下一次交互再试
+        bgmAutoDone = false;
+        setBgmState('paused');
+      });
+    }
+  }
+
+  function onFirstInteract(e) {
+    // 若点击的就是音乐按钮本身，交给按钮逻辑处理，避免冲突
+    if (e && e.target && bgmContainer.contains(e.target)) return;
+    tryAutoPlay();
+  }
+
+  AUTO_EVENTS.forEach(function(evt){
+    window.addEventListener(evt, onFirstInteract, { passive: true });
+  });
+
+  // 记录用户主动暂停：之后不再自动播放
+  bgmToggleBtn.addEventListener('click', function(){
+    if (!bgmAudio.paused && !bgmAudio.ended) {
+      bgmUserPaused = true;   // 用户点击时正在播放 → 说明这是主动暂停
+    } else {
+      bgmUserPaused = false;  // 用户主动播放 → 恢复自动播放许可
+    }
+  }, true /* 捕获阶段，先于按钮自身的处理器执行，读取点击前状态 */);
+})();
 </script>
 
 </body>
