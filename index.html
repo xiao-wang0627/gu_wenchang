@@ -67,13 +67,15 @@ section{position:relative}
 }
 @keyframes textFade{0%,100%{opacity:.6}50%{opacity:1}}
 .loader-bar{
-  width:200px;height:2px;background:rgba(212,175,55,.2);margin-top:2rem;overflow:hidden;border-radius:2px;
+  width:220px;height:3px;background:rgba(212,175,55,.2);margin-top:2rem;overflow:hidden;border-radius:3px;
 }
-.loader-bar::after{
-  content:'';display:block;width:40%;height:100%;background:var(--gold);
-  animation:barMove 1.5s ease-in-out infinite;
+.loader-fill{
+  width:0;height:100%;background:var(--gold);border-radius:3px;
+  box-shadow:0 0 10px rgba(212,175,55,.8);transition:width .3s ease;
 }
-@keyframes barMove{0%{margin-left:-40%}100%{margin-left:100%}}
+.loader-pct{
+  color:rgba(212,175,55,.7);font-size:.75rem;letter-spacing:.2em;margin-top:.9rem;font-family:var(--sans);
+}
 
 /* ==================== 导航栏 ==================== */
 #navbar{
@@ -1135,7 +1137,8 @@ footer{
   <div class="loader-star"></div>
   <div class="loader-text">谷文昌纪念馆</div>
   <div class="loader-sub">RED CULTURE DIGITAL HALL</div>
-  <div class="loader-bar"></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-pct">正在加载展厅资源 0%</div>
 </div>
 
 <!-- ===== 导航栏 ===== -->
@@ -1322,7 +1325,7 @@ footer{
 
     <div class="artifact-grid">
       <div class="artifact-item artifact-1 reveal">
-        <div class="artifact-img"><img src="images/dongshan-before.webp" alt="昔日东山岛" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/dongshan-before.webp" alt="昔日东山岛"></div>
         <div class="artifact-info">
           <div class="tag">历史档案</div>
           <h4>昔日东山岛旧貌</h4>
@@ -1331,7 +1334,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-2 reveal reveal-delay-1">
-        <div class="artifact-img"><img src="images/hall-exhibit3.webp" alt="谷文昌纪念馆序厅" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/hall-exhibit3.webp" alt="谷文昌纪念馆序厅"></div>
         <div class="artifact-info">
           <div class="tag">纪念馆实景</div>
           <h4>谷文昌纪念馆序厅</h4>
@@ -1340,7 +1343,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-3 reveal reveal-delay-2">
-        <div class="artifact-img"><img src="images/planting.webp" alt="植树造林现场" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/planting.webp" alt="植树造林现场"></div>
         <div class="artifact-info">
           <div class="tag">历史影像</div>
           <h4>东山百姓沙滩造林</h4>
@@ -1349,7 +1352,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-4 reveal reveal-delay-1">
-        <div class="artifact-img"><img src="images/tree.webp" alt="谷文昌与木麻黄" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/tree.webp" alt="谷文昌与木麻黄"></div>
         <div class="artifact-info">
           <div class="tag">珍贵留影</div>
           <h4>谷文昌与木麻黄</h4>
@@ -1358,7 +1361,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-5 reveal reveal-delay-2">
-        <div class="artifact-img"><img src="images/hall-exhibit5.webp" alt="谷文昌旧居复原展" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/hall-exhibit5.webp" alt="谷文昌旧居复原展"></div>
         <div class="artifact-info">
           <div class="tag">纪念馆实景</div>
           <h4>谷文昌旧居复原展</h4>
@@ -1367,7 +1370,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-6 reveal reveal-delay-3">
-        <div class="artifact-img"><img src="images/dongshan-rock-aligned-after.webp" alt="东山岛新貌" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/dongshan-rock-aligned-after.webp" alt="东山岛新貌"></div>
         <div class="artifact-info">
           <div class="tag">沧桑巨变</div>
           <h4>今日东山岛新貌</h4>
@@ -1376,7 +1379,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-7 reveal reveal-delay-1">
-        <div class="artifact-img"><img src="images/hall-exhibit6.webp" alt="勤政历程展厅" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/hall-exhibit6.webp" alt="勤政历程展厅"></div>
         <div class="artifact-info">
           <div class="tag">纪念馆实景</div>
           <h4>勤政历程展厅</h4>
@@ -1385,7 +1388,7 @@ footer{
       </div>
 
       <div class="artifact-item artifact-8 reveal reveal-delay-2">
-        <div class="artifact-img"><img src="images/hall-exhibit8.webp" alt="为民担当展厅" loading="lazy"></div>
+        <div class="artifact-img"><img src="images/hall-exhibit8.webp" alt="为民担当展厅"></div>
         <div class="artifact-info">
           <div class="tag">纪念馆实景</div>
           <h4>为民担当展厅</h4>
@@ -1479,7 +1482,7 @@ footer{
 <section id="study" class="section-pad" style="padding-top:0;">
   <!-- 研学大合照横幅（全宽） -->
   <div class="study-banner reveal">
-    <img src="images/study-hero.webp" alt="谷文昌纪念馆研学大合照" loading="lazy">
+    <img src="images/study-hero.webp" alt="谷文昌纪念馆研学大合照">
     <div class="study-banner-text">
       <span class="study-banner-badge">红色研学 · 精神传承</span>
       <h3>追寻谷公足迹 · 传承红色基因</h3>
@@ -1498,7 +1501,7 @@ footer{
     <!-- ===== 研学特色 ===== -->
     <div class="study-features">
       <div class="study-feature-card reveal">
-        <div class="study-feature-img"><img src="images/study-1.webp" alt="谷文昌纪念馆参观" loading="lazy"></div>
+        <div class="study-feature-img"><img src="images/study-1.webp" alt="谷文昌纪念馆参观"></div>
         <div class="study-feature-body">
           <span class="study-feature-num">壹</span>
           <h4>谷文昌纪念馆参观</h4>
@@ -1506,7 +1509,7 @@ footer{
         </div>
       </div>
       <div class="study-feature-card reveal reveal-delay-1">
-        <div class="study-feature-img"><img src="images/study-2.webp" alt="谷文昌廉政纪念馆参观" loading="lazy"></div>
+        <div class="study-feature-img"><img src="images/study-2.webp" alt="谷文昌廉政纪念馆参观"></div>
         <div class="study-feature-body">
           <span class="study-feature-num">贰</span>
           <h4>廉政纪念馆参观</h4>
@@ -1514,7 +1517,7 @@ footer{
         </div>
       </div>
       <div class="study-feature-card reveal reveal-delay-2">
-        <div class="study-feature-img"><img src="images/study-3.webp" alt="团课党课学习" loading="lazy"></div>
+        <div class="study-feature-img"><img src="images/study-3.webp" alt="团课党课学习"></div>
         <div class="study-feature-body">
           <span class="study-feature-num">叁</span>
           <h4>团课 · 党课教育</h4>
@@ -1522,7 +1525,7 @@ footer{
         </div>
       </div>
       <div class="study-feature-card reveal reveal-delay-3">
-        <div class="study-feature-img"><img src="images/study-4.webp" alt="百里木麻黄实地教学" loading="lazy"></div>
+        <div class="study-feature-img"><img src="images/study-4.webp" alt="百里木麻黄实地教学"></div>
         <div class="study-feature-body">
           <span class="study-feature-num">肆</span>
           <h4>百里木麻黄实地教学</h4>
@@ -1647,24 +1650,64 @@ footer{
 </footer>
 
 <script>
-// ===== 加载页 =====
-// 不等所有图片下载完：DOM 就绪后稍作停顿即隐藏加载页，加快首屏可交互时间
+// ===== 加载页（预加载全部图片资源，加载差不多后再放行）=====
 (function(){
+  var loader = document.getElementById('loader');
+  var fill = loader ? loader.querySelector('.loader-fill') : null;
+  var pctEl = loader ? loader.querySelector('.loader-pct') : null;
+  var isDone = false;
   var hideLoader = function(){
+    if (isDone) return;
+    isDone = true;
     var el = document.getElementById('loader');
     if (el) el.classList.add('done');
   };
-  // 最迟 2.5 秒强制隐藏，避免个别资源拖慢整页
-  var hardStop = setTimeout(hideLoader, 2500);
-  var onReady = function(){
-    clearTimeout(hardStop);
-    setTimeout(hideLoader, 700);
+
+  // 1) 收集所有需要预加载的本地图片（<img> src + CSS background url）
+  var set = new Set();
+  document.querySelectorAll('img[src]').forEach(function(im){
+    var s = im.getAttribute('src');
+    if (s) set.add(s);
+  });
+  try {
+    document.querySelectorAll('style').forEach(function(st){
+      var re = /url\(['"]?(images\/[^'")]+)['"]?\)/g, m;
+      while ((m = re.exec(st.textContent))) set.add(m[1]);
+    });
+  } catch(e){}
+  var urls = Array.from(set).filter(function(u){ return !/^https?:|^data:/.test(u); });
+
+  var total = urls.length;
+  var loaded = 0;
+  var update = function(){
+    var p = total ? Math.round(loaded / total * 100) : 100;
+    if (fill) fill.style.width = p + '%';
+    if (pctEl) pctEl.textContent = '正在加载展厅资源 ' + p + '%';
   };
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    onReady();
-  } else {
-    document.addEventListener('DOMContentLoaded', onReady);
+
+  // 2) 兜底：最长等待 8 秒，避免个别资源卡住整页
+  var hardStop = setTimeout(hideLoader, 8000);
+
+  if (total === 0) {
+    update(); clearTimeout(hardStop); hideLoader(); return;
   }
+
+  // 3) 预加载每张图片，全部就绪（或失败）后隐藏加载页
+  urls.forEach(function(u){
+    var img = new Image();
+    var onEnd = function(){
+      loaded++;
+      update();
+      if (loaded >= total) {
+        clearTimeout(hardStop);
+        setTimeout(hideLoader, 350); // 留一点时间让进度条走满
+      }
+    };
+    img.onload = onEnd;
+    img.onerror = onEnd;
+    img.src = u;
+  });
+  update();
 })();
 
 // ===== 导航栏显隐 + 进度条 =====
